@@ -13,15 +13,15 @@ Folders
 This folder contains a MSVC solution for the C++ DLL that wraps the Awesomium C++ API.
 To compile this solution you need to:
 
-* Have the Awesomium SDK installed. If you install it somewhere other than C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0, you will have to change the project's include directory (currently set to C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0\include) and the library directory (currently set to C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0\build\lib).
-* Have OpenGL installed (The project links with opengl32.lib'.
-* Have the DirectX SDK installed and "DXSDK_DIR" as an environment variable (the project's include directories currently have $(DXSDK_DIR)\include set).
+* **Have the Awesomium SDK installed.** If you install it somewhere other than C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0, you will have to change the project's include directory (currently set to _C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0\include_) and the library directory (currently set to _C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.1.0\build\lib_).
+* **Have OpenGL installed** (The project links with _'opengl32.lib'_).
+* **Have the DirectX SDK installed** and **"DXSDK_DIR" as an environment variable** (the project's include directories currently have _$(DXSDK_DIR)\include_ set).
 
 If succesfully built, the output will be located at either:
 
-* CppDLL\Debug\AwesomiumUnity.dll
+* _CppDLL\Debug\AwesomiumUnity.dll_
 or
-* CppDLL\Release\AwesomiumUnity.dll
+* _CppDLL\Release\AwesomiumUnity.dll_
 
 
 
