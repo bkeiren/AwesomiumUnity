@@ -17,7 +17,11 @@ To compile this solution you need to:
 * Have OpenGL installed (The project links with opengl32.lib'.
 * Have the DirectX SDK installed and "DXSDK_DIR" as an environment variable (the project's include directories currently have $(DXSDK_DIR)\include set).
 
+If succesfully built, the output will be located at either:
 
+* CppDLL\Debug\AwesomiumUnity.dll
+or
+* CppDLL\Release\AwesomiumUnity.dll
 
 
 
