@@ -50,6 +50,10 @@ The files serve the following purposes:
 * _UnityScripts\AwesomiumUnity\AwesomiumUnityWebView_ : 
 	* Provides a class that interfaces with the C++ DLL. This class is used for talking to instances of the _Awesomium::WebView_ C++ class.
 
+#### UnityScripts\AwesomiumUnity\Examples
+
+This folder contains simple examples to get you going.
+
 Building and using it all
 --------------------------------
 
