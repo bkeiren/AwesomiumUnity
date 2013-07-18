@@ -56,7 +56,9 @@ The files serve the following purposes:
 
 #### AwesomiumUnityScripts\Examples
 
-This folder contains simple examples to get you going.
+This folder contains simple examples to get you going. In most cases you can simply add one of these example scripts to a GameObject that has been set up to render webpages to see it working. 
+
+If an example is accompanied by a folder with the same name as the example script, it means that there is some HTML/CSS/JavaScript code that goes with it. These are generally loaded directly off of GitHub from within the example script.
 
 Building and using it all
 --------------------------------
