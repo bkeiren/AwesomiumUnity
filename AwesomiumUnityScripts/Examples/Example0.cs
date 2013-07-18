@@ -5,6 +5,10 @@ using System.Collections;
 public class Example0 : MonoBehaviour 
 {
 	private AwesomiumUnityWebTexture m_WebTexture = null;
+	
+	// This example page already contains some buttons that will call our functions.
+	// You can view the page source freely on GitHub at https://github.com/Rycul/AwesomiumUnity/blob/master/AwesomiumUnityScripts/Examples/Example0/index.php.
+	private string m_URL = "http://htmlpreview.github.io/?https://github.com/Rycul/AwesomiumUnity/blob/master/AwesomiumUnityScripts/Examples/Example0/index.php";
 
 	// Use this for initialization
 	void Start () 
@@ -22,6 +26,8 @@ public class Example0 : MonoBehaviour
 		m_WebTexture.WebView.BindJavaScriptCallback("PlayGame", this.Callback_PlayGame);	// Can be called from the HTML page by using: Unity.PlayGame();
 		m_WebTexture.WebView.BindJavaScriptCallback("GoToOptions", this.Callback_GoToOptions);	// Unity.GoToOptions();
 		m_WebTexture.WebView.BindJavaScriptCallback("QuitGame", this.Callback_QuitGame);	// Unity.QuitGame();
+		
+		m_WebTexture.LoadURL(m_URL);
 	}
 	
 	void Callback_PlayGame()
