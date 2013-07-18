@@ -30,31 +30,31 @@ or
 * _CppDLL\Release\AwesomiumUnity.dll_
 
 
-### UnityScripts
+### AwesomiumUnityScripts
 
 This folder contains the Unity scripts that interact with the native code (C++) DLL and the scripts that are actually attached to components in order to get webpages to render.
 
 The files serve the following purposes:
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityError.cs_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityError.cs_ : 
 	* Provides a binary-compatible structure to represent Awesomium errors.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityVirtualKey.cs_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityVirtualKey.cs_ : 
 	* Provides a binary-compatible structure to represent Awesomium virtual keys.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebCore.cs_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebCore.cs_ : 
 	* Provides a class with static functions that interface with the C++ DLL. This class is used for talking to the _Awesomium::WebCore_ C++ class. Initialization and shutdown of the WebCore is handled automatically when needed.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebCoreHelper.cs_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebCoreHelper.cs_ : 
 	* Contains a class that derives from MonoBehaviour which is created automatically and updates the WebCore each frame.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebKeyboardEvent_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebKeyboardEvent_ : 
 	* Provides a binary-compatible structure to represent Awesomium's _WebKeyboardEvent_s.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebKeyModifiers_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebKeyModifiers_ : 
 	* Provides a binary-compatible structure to represent Awesomium's _WebKeyModifiers_.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebKeyType_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebKeyType_ : 
 	* Provides a binary-compatible structure to represent Awesomium's _WebKeyType_.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebTexture_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebTexture_ : 
 	* Contains the main class you need to use to render webpages. The class derives from MonoBehaviour and should be attached to a GameObject. A single instance of this class represent a single webpage. Input, interactiveness, etc. are all handled by this class.
-* _UnityScripts\AwesomiumUnity\AwesomiumUnityWebView_ : 
+* _AwesomiumUnityScripts\AwesomiumUnityWebView_ : 
 	* Provides a class that interfaces with the C++ DLL. This class is used for talking to instances of the _Awesomium::WebView_ C++ class.
 
-#### UnityScripts\AwesomiumUnity\Examples
+#### AwesomiumUnityScripts\Examples
 
 This folder contains simple examples to get you going.
 
@@ -74,7 +74,7 @@ Building and using it all
 	* _avcodec-53.dll_
 	* _avformat-53.dll_
 	* _avutil-51.dll_
-* Copy the folder _UnityScripts\AwesomiumUnity_ to your Unity project's _Assets_ folder (or any subdirectory within it).
+* Copy the folder _AwesomiumUnityScripts_ to your Unity project's _Assets_ folder (or any subdirectory within it).
 * Open your Unity project
 * Create a GameObject
 * Add either a _GUITexture_ component or a _Renderer_ component with a material and a _MeshCollider_ component to your GameObject
@@ -94,7 +94,7 @@ Building and using it all
 	* _avcodec-53.dll_
 	* _avformat-53.dll_
 	* _avutil-51.dll_
-* Copy the folder _UnityScripts\AwesomiumUnity_ to your Unity project's _Assets_ folder (or any subdirectory within it).
+* Copy the folder _AwesomiumUnityScripts_ to your Unity project's _Assets_ folder (or any subdirectory within it).
 * Open your Unity project
 * Create a GameObject
 * Add either a _GUITexture_ component or a _Renderer_ component with a material and a _MeshCollider_ component to your GameObject
