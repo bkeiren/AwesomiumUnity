@@ -68,7 +68,7 @@ Building and using it all
 * Do one of the following two options:
 	* 1) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to your Unity project's _Assets\Plugins_ folder.
 	OR
-	* 2) Copy the _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to your Unity project's _Assets\Plugins_ folder.
+	* 2) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to your Unity project's _Assets\Plugins_ folder.
 * Copy the following files from your Awesomium SDK installation directory's _build\bin_ folder to your Unity installation directory's _Editor_ folder (**NOT** your project _Assets\Editor_ folder!).
 	* _awesomium_process.exe_
 	* _awesomium.dll_
@@ -91,7 +91,7 @@ Building and using it all
 * Do one of the following two options:
 	* 1) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to the same folder as your executable.
 	OR
-	* 2) Copy the _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to the same folder as your executable.
+	* 2) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to the same folder as your executable.
 * Copy the following files from your Awesomium SDK installation directory's _build\bin_ folder to the same folder as your executable.
 	* _awesomium_process.exe_
 	* _awesomium.dll_
