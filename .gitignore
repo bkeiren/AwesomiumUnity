@@ -213,3 +213,15 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+
+!CppDLL/bin/
+
+CppDLL/bin/*
+!CppDLL/bin/Debug/
+!CppDLL/bin/Release/
+
+CppDLL/bin/Debug/*
+CppDLL/bin/Release/*
+!CppDLL/bin/Debug/AwesomiumUnity.dll
+!CppDLL/bin/Release/AwesomiumUnity.dll
