@@ -69,7 +69,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 		
 		if (guiTexture)
 		{
-			guiTexture.texture = m_Texture;	
+			guiTexture.texture = m_Texture;
 		}
 		else if (renderer && renderer.material)
 		{		
@@ -110,7 +110,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 				
 				MouseX = (int)(((MouseX - guiTextureScreenRect.x) / guiTextureScreenRect.width) * m_Width);
 				MouseY = (int)(((MouseY - guiTextureScreenRect.y) / guiTextureScreenRect.height) * m_Height);
-				
+
 				m_WebView.InjectMouseMove(MouseX, MouseY);
 			}
 			else if (collider)
@@ -122,12 +122,12 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 					v.y = 1.0f - v.y;
 					v.Scale(new Vector2((float)m_WebView.Width, (float)m_WebView.Height));
 
-                    if (m_FlipX)
-                        v.x = m_WebView.Width - v.x;
+					if (m_FlipX)
+						v.x = m_WebView.Width - v.x;
 
-                    if (m_FlipY)
-                        v.y = m_WebView.Height - v.y;
-
+					if (m_FlipY)
+						v.y = m_WebView.Height - v.y;
+					
 					Debug.Log("MOUSE: " + v);
 					m_WebView.InjectMouseMove((int)v.x, (int)v.y);
 				}	
@@ -444,7 +444,11 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	
 	void OnDestroy()
 	{
-		
+		if (m_WebView != null)
+		{
+			m_WebView.Destroy ();
+			m_WebView = null;
+		}
 	}
 	
 	void OnApplicationQuit()

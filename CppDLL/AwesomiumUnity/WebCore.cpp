@@ -95,6 +95,12 @@ extern "C" EXPORT_API void* awe_webcore_createwebview( int _Width, int _Height )
 	return 0;
 }
 
+extern "C" EXPORT_API void awe_webcore_destroywebview( WebView* view )
+{
+	if (view != NULL)
+		view->Destroy();
+}
+
 extern "C" EXPORT_API void awe_webcore_update()
 {
 	WebCore* webCore = WebCore::instance();

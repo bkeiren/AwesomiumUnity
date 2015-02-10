@@ -14,6 +14,9 @@ public class AwesomiumUnityWebCore
 	
 	[DllImport(DllName)]
 	extern static private System.IntPtr awe_webcore_createwebview( int _Width, int _Height );
+
+	[DllImport(DllName)]
+	extern static private void awe_webcore_destroywebview( System.IntPtr _WebView );
 	
 	[DllImport(DllName)]
 	extern static private void awe_webcore_update();
@@ -85,11 +88,11 @@ public class AwesomiumUnityWebCore
 			Debug.LogError("The web core has not been initialized. You must call Initialize() before being able to call Shutdown()");
 			return;
 		}
-		RemoveQueuedWebViews();
 		foreach (AwesomiumUnityWebView webView in m_WebViews)
 		{
 			webView.Destroy();	
 		}
+		RemoveQueuedWebViews();
 		
 		if (Application.isEditor) return;	// Due to the fact that Awesomium doesn't like to be initialized and shutdown multiple times per process,
 											// combined with the fact that the Unity Editor IS a single process (regardless of entering or exiting playmode),
@@ -120,13 +123,15 @@ public class AwesomiumUnityWebCore
 	// DO NOT CALL MANUALLY.
 	public static void _QueueWebViewForRemoval( AwesomiumUnityWebView _WebView )
 	{
-		m_WebViewsQueuedForRemoval.Add(_WebView);	
+		if (!m_WebViewsQueuedForRemoval.Contains(_WebView))
+			m_WebViewsQueuedForRemoval.Add(_WebView);
 	}
 	
 	private static void RemoveQueuedWebViews()
 	{
 		foreach (AwesomiumUnityWebView webView in m_WebViewsQueuedForRemoval)
 		{
+			awe_webcore_destroywebview(webView.NativePtr);
 			m_WebViews.Remove(webView);	
 		}
 		m_WebViewsQueuedForRemoval.Clear();
