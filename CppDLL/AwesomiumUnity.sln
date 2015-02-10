@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AwesomiumUnity", "AwesomiumUnity\AwesomiumTest.vcproj", "{AFECDA20-316D-421E-9F11-1A0D85479933}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AwesomiumUnity", "AwesomiumUnity\AwesomiumTest.vcxproj", "{AFECDA20-316D-421E-9F11-1A0D85479933}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
