@@ -121,6 +121,13 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 					Vector2 v = HitInfo.textureCoord;
 					v.y = 1.0f - v.y;
 					v.Scale(new Vector2((float)m_WebView.Width, (float)m_WebView.Height));
+
+                    if (m_FlipX)
+                        v.x = m_WebView.Width - v.x;
+
+                    if (m_FlipY)
+                        v.y = m_WebView.Height - v.y;
+
 					Debug.Log("MOUSE: " + v);
 					m_WebView.InjectMouseMove((int)v.x, (int)v.y);
 				}	
