@@ -8,6 +8,7 @@
 #include <map>
 #include "JSMethodHandler.h"
 #include "UnitySurfaceFactory.h"
+#include "LoadListener.h"
 
 using namespace Awesomium;
 
@@ -90,15 +91,24 @@ extern "C" EXPORT_API void* awe_webcore_createwebview( int _Width, int _Height )
 		AwesomiumUnity::m_JSUnityObjects[view] = view->CreateGlobalJavascriptObject(WSLit("Unity"));
 		view->set_js_method_handler(AwesomiumUnity::g_JSMethodHandler);
 
+		// Attach a load listener.
+		AwesomiumUnity::LoadListener* loadListener = new AwesomiumUnity::LoadListener();
+		view->set_load_listener(loadListener);
+
 		return (void*)view;
 	}
 	return 0;
 }
 
-extern "C" EXPORT_API void awe_webcore_destroywebview( WebView* view )
+extern "C" EXPORT_API void awe_webcore_destroywebview( WebView* _View )
 {
-	if (view != NULL)
-		view->Destroy();
+	if (_View != NULL)
+	{
+		// Destroy the load listener if there is one.
+		delete (AwesomiumUnity::LoadListener*)_View->load_listener();
+			
+		_View->Destroy();
+	}
 }
 
 extern "C" EXPORT_API void awe_webcore_update()

@@ -1,4 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using System.Collections;
 
 public class AwesomiumUnityWebCoreHelper : MonoBehaviour 
@@ -11,6 +14,31 @@ public class AwesomiumUnityWebCoreHelper : MonoBehaviour
 			return m_Instance;
 		}
 	}
+
+	/*void OnEnable()
+	{
+	#if UNITY_EDITOR
+		EditorApplication.playmodeStateChanged += StateChange;
+	#endif
+	}
+	
+	#if UNITY_EDITOR
+	void StateChange()
+	{
+		if (EditorApplication.isPlayingOrWillChangePlaymode && EditorApplication.isPlaying) {
+
+				}
+
+	}
+	#endif
+
+
+	void OnDisable()
+	{
+	#if UNITY_EDITOR
+		EditorApplication.playmodeStateChanged -= StateChange;
+	#endif
+	}*/
 	
 	void Awake()
 	{
@@ -21,10 +49,7 @@ public class AwesomiumUnityWebCoreHelper : MonoBehaviour
 		}
 		
 		m_Instance = this;
-		if (!AwesomiumUnityWebCore.IsRunning)
-		{
-			AwesomiumUnityWebCore.Initialize();	
-		}
+		AwesomiumUnityWebCore.EnsureInitialized();
 		DontDestroyOnLoad(this.gameObject);
 	}
 	

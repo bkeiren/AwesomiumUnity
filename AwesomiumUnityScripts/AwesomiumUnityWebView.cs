@@ -7,95 +7,119 @@ public class AwesomiumUnityWebView
 {
 	internal const string DllName = "AwesomiumUnity";
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_loadurl( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _URL );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_iscrashed( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_isloading( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_istransparent( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_destroy( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_copybuffertotexture( System.IntPtr _Instance, System.IntPtr _TextureNativePtr, int _UnityTextureWidth, int _UnityTextureHeight );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private int awe_webview_surface_width( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private int awe_webview_surface_height( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_surface_isdirty( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_reload( System.IntPtr _Instance, bool _IgnoreCache );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_inject_mousemove( System.IntPtr _Instance, int _X, int _Y );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_inject_mousedown( System.IntPtr _Instance, int _Button );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_inject_mouseup( System.IntPtr _Instance, int _Button );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_inject_mousewheel( System.IntPtr _Instance, int _ScrollVert, int _ScrollHorz );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_inject_keyboardevent( System.IntPtr _Instance, ref AwesomiumUnityWebKeyboardEvent _WebKeyBoardEvent );
 
 	//[DllImport(DllName)]
 	//extern static private void awe_webview_inject_touchevent( System.IntPtr _Instance, ref AwesomiumUnityWebTouchEvent _WebTouchEvent );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_resize( System.IntPtr _Instance, int _Width, int _Height );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_executejavascript( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _Script );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_focus( System.IntPtr _Instance );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_unfocus( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_stop( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_settransparent( System.IntPtr _Instance, bool _Transparent );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private AwesomiumUnityError awe_webview_lasterror( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_cangoback( System.IntPtr _Instance );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private bool awe_webview_cangoforward( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_goback( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_goforward( System.IntPtr _Instance );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_gotohistoryoffset( System.IntPtr _Instance, int _Offset );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_js_setmethod( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _MethodName, bool _HasReturnValue );
-	
+
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_register_callback_beginloadingframe( System.IntPtr _Instance, System.IntPtr _Callback );
+
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_register_callback_failloadingframe( System.IntPtr _Instance, System.IntPtr _Callback );
+
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_register_callback_finishloadingframe( System.IntPtr _Instance, System.IntPtr _Callback );
+
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_register_callback_documentready( System.IntPtr _Instance, System.IntPtr _Callback );
+
 	
 	public delegate void OnJavaScriptMethodCall();
+
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void OnBeginLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int64 _FrameID, bool _IsMainFrame, bool _IsErrorPage);
+
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void OnFailLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int32 _ErrorCode, [MarshalAs(UnmanagedType.LPStr)]string _ErrorDesc, System.Int64 _FrameID, bool _IsMainFrame);
+
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void OnFinishLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int64 _FrameID, bool _IsMainFrame);
+
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void OnDocumentReady([MarshalAs(UnmanagedType.LPStr)]string _URL);
 	
 	private Dictionary<string, OnJavaScriptMethodCall> m_CallbacksOnJavaScriptMethodCall = new Dictionary<string, OnJavaScriptMethodCall>();
 	
@@ -299,5 +323,25 @@ public class AwesomiumUnityWebView
 		{
 			callback();
 		}
+	}
+
+	public void RegisterBeginLoadingFrameCallback( OnBeginLoadingFrame _Callback )
+	{
+		awe_webview_register_callback_beginloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
+	}
+
+	public void RegisterFailLoadingFrameCallback( OnFailLoadingFrame _Callback )
+	{
+		awe_webview_register_callback_failloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
+	}
+
+	public void RegisterFinishLoadingFrameCallback( OnFinishLoadingFrame _Callback )
+	{
+		awe_webview_register_callback_finishloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
+	}
+
+	public void RegisterDocumentReadyCallback( OnDocumentReady _Callback )
+	{
+		awe_webview_register_callback_documentready (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
 	}
 }

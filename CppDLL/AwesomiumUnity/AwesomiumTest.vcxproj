@@ -97,6 +97,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="JSMethodHandler.cpp" />
+    <ClCompile Include="LoadListener.cpp" />
     <ClCompile Include="UnityGraphicsDevice.cpp" />
     <ClCompile Include="UnitySurface.cpp" />
     <ClCompile Include="UnitySurfaceFactory.cpp" />
@@ -106,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="GraphicsInclude.h" />
     <ClInclude Include="JSMethodHandler.h" />
+    <ClInclude Include="LoadListener.h" />
     <ClInclude Include="UnityPlugin.h" />
     <ClInclude Include="UnitySurface.h" />
     <ClInclude Include="UnitySurfaceFactory.h" />

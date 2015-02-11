@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UnityPlugin.h"
+#include "LoadListener.h"
 
 namespace Awesomium
 {
@@ -67,3 +68,9 @@ extern "C" EXPORT_API void awe_webview_goforward( Awesomium::WebView* _Instance 
 extern "C" EXPORT_API void awe_webview_gotohistoryoffset( Awesomium::WebView* _Instance, int _Offset );
 
 extern "C" EXPORT_API void awe_webview_js_setmethod( Awesomium::WebView* _Instance, char* _MethodName, bool _HasReturnValue );
+
+// These should be called by managed C# code.
+extern "C" EXPORT_API void awe_webview_register_callback_beginloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::BeginLoadingFrameCallback _Callback );
+extern "C" EXPORT_API void awe_webview_register_callback_failloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FailLoadingFrameCallback _Callback );
+extern "C" EXPORT_API void awe_webview_register_callback_finishloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FinishLoadingFrameCallback _Callback );
+extern "C" EXPORT_API void awe_webview_register_callback_documentready( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::DocumentReadyCallback _Callback );

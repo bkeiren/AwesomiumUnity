@@ -326,3 +326,51 @@ extern "C" EXPORT_API void awe_webview_js_setmethod( WebView* _Instance, char* _
 		}
 	}
 }
+
+extern "C" EXPORT_API void awe_webview_register_callback_beginloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::BeginLoadingFrameCallback _Callback )
+{
+	if (!_Instance)
+		return;
+
+	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
+	if (!loadListener)
+		return;
+
+	loadListener->RegisterBeginLoadingFrameCallback(_Callback);
+}
+
+extern "C" EXPORT_API void awe_webview_register_callback_failloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FailLoadingFrameCallback _Callback )
+{
+	if (!_Instance)
+		return;
+
+	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
+	if (!loadListener)
+		return;
+
+	loadListener->RegisterFailLoadingFrameCallback(_Callback);
+}
+
+extern "C" EXPORT_API void awe_webview_register_callback_finishloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FinishLoadingFrameCallback _Callback )
+{
+	if (!_Instance)
+		return;
+
+	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
+	if (!loadListener)
+		return;
+
+	loadListener->RegisterFinishLoadingFrameCallback(_Callback);
+}
+
+extern "C" EXPORT_API void awe_webview_register_callback_documentready( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::DocumentReadyCallback _Callback )
+{
+	if (!_Instance)
+		return;
+
+	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
+	if (!loadListener)
+		return;
+
+	loadListener->RegisterDocumentReadyCallback(_Callback);
+}

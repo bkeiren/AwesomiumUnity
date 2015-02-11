@@ -6,19 +6,19 @@ public class AwesomiumUnityWebCore
 {
 	internal const string DllName = "AwesomiumUnity";
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webcore_initialize();
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webcore_shutdown();
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private System.IntPtr awe_webcore_createwebview( int _Width, int _Height );
 
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webcore_destroywebview( System.IntPtr _WebView );
 	
-	[DllImport(DllName)]
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webcore_update();
 	
 	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
@@ -32,11 +32,11 @@ public class AwesomiumUnityWebCore
 	public delegate void OnJavaScriptMethodCallWithReturnValue( System.IntPtr _WebViewCaller, [MarshalAs(UnmanagedType.LPWStr)]string _MethodName );
 	// TODO!!!!!!!^ RETURN VALUE!
 	
-	[DllImport(DllName)]
-	extern static private void awe_jsmethodhandler_register_callback_onmethodcall( OnJavaScriptMethodCall _Callback );
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_jsmethodhandler_register_callback_onmethodcall( System.IntPtr _Callback );
 	
-	[DllImport(DllName)]
-	extern static private void awe_jsmethodhandler_register_callback_onmethodcallwithreturnvalue( OnJavaScriptMethodCallWithReturnValue _Callback );
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_jsmethodhandler_register_callback_onmethodcallwithreturnvalue( System.IntPtr _Callback );
 	
 	
 	
@@ -52,7 +52,7 @@ public class AwesomiumUnityWebCore
 		}
 	}
 	
-	public static void Initialize()
+	public static void EnsureInitialized()
 	{
 		if (!IsRunning)
 		{		
@@ -62,12 +62,13 @@ public class AwesomiumUnityWebCore
 		{
 			Debug.LogError("The web core has already been initialized. You must call Shutdown() before initializing again");
 		}
+
+		// NOTE: We *always* need to register these callbacks because this will overwrite any previously set callbacks (when running in the editor).
+		// Registers a C# callback to be called from the unmanaged C++ DLL.
+		awe_jsmethodhandler_register_callback_onmethodcall(Marshal.GetFunctionPointerForDelegate((OnJavaScriptMethodCall)Callback_OnJavaScriptMethodCall));
 		
 		// Registers a C# callback to be called from the unmanaged C++ DLL.
-		awe_jsmethodhandler_register_callback_onmethodcall(Callback_OnJavaScriptMethodCall);
-		
-		// Registers a C# callback to be called from the unmanaged C++ DLL.
-		awe_jsmethodhandler_register_callback_onmethodcallwithreturnvalue(Callback_OnJavaScriptMethodCallWithReturnValue);
+		awe_jsmethodhandler_register_callback_onmethodcallwithreturnvalue(Marshal.GetFunctionPointerForDelegate((OnJavaScriptMethodCallWithReturnValue)Callback_OnJavaScriptMethodCallWithReturnValue));
 		
 		CreateWebCoreHelper();
 	}

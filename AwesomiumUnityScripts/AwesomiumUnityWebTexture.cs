@@ -58,11 +58,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	// Use this for initialization
 	void Awake () 
 	{
-		if (!AwesomiumUnityWebCore.IsRunning)
-		{
-			AwesomiumUnityWebCore.Initialize();
-		}
-		AwesomiumUnityWebCore.CreateWebCoreHelper();
+		AwesomiumUnityWebCore.EnsureInitialized();
 		
 		// Call resize which will create a texture and a webview for us since both do not exist yet at this point.
 		Resize(m_Width, m_Height);
