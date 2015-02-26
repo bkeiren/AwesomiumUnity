@@ -15,6 +15,14 @@ The wrapper consist of a custom native code C++ DLL which simply wraps Awesomium
 
 **_Functionality in development, code structure and architecture not completely final._**
 
+Projects using AwesomiumUnity
+--------------------------------
+
+Besides individual users, AwesomiumUnity is also used by some game developers or other companies to integrate the power of HTML5 and web browsing in their application. 
+
+The developers of **[TableTop Simulator](http://berserk-games.com/tabletop-simulator/)** by **[Berserk Games](http://berserk-games.com/)** are using AwesomiumUnity in their game for an [in-game tablet in the 3D game world](http://steamcommunity.com/games/TabletopSimulator/announcements/detail/154583549672473635), which users can interact with and use to browse the web.
+
+
 Folders
 --------------------------------
 
