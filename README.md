@@ -3,11 +3,17 @@ AwesomiumUnity
 
 AwesomiumUnity is a third-party Awesomium wrapper intended for use with Unity3D.
 
+*AwesomiumUnity allows you to display and use HTML documents in your Unity3D application. HTML5, CSS, and JavaScript are supported, and rendered views can be displayed anywhere a regular Unity Texture2D can be used. Possibilities for your application include:*
+
+- Fully interactive live browsing of **the** internet, in-game.
+- Rich, complex **2D or 3D** UI's created using HTML, CSS, and JavaScript.
+- Quick iteration times and result. Just edit your HTML, CSS, or JavaScript and reload!
+
 The wrapper consist of a custom native code C++ DLL which simply wraps Awesomium's C++ API (requires Unity Pro to use) and a set of C# scripts that interface with this DLL.
 
 **The current state of the project is:** 
 
-**_Functionality in development, code structure and architecture not final, crashes from time to time._**
+**_Functionality in development, code structure and architecture not completely final._**
 
 Folders
 --------------------------------
@@ -49,10 +55,12 @@ The files serve the following purposes:
 	* Provides a binary-compatible structure to represent Awesomium's _WebKeyModifiers_.
 * _AwesomiumUnityScripts\AwesomiumUnityWebKeyType_ : 
 	* Provides a binary-compatible structure to represent Awesomium's _WebKeyType_.
-* _AwesomiumUnityScripts\AwesomiumUnityWebTexture_ : 
-	* Contains the main class you need to use to render webpages. The class derives from MonoBehaviour and should be attached to a GameObject. A single instance of this class represent a single webpage. Input, interactiveness, etc. are all handled by this class.
 * _AwesomiumUnityScripts\AwesomiumUnityWebView_ : 
 	* Provides a class that interfaces with the C++ DLL. This class is used for talking to instances of the _Awesomium::WebView_ C++ class.
+* _AwesomiumUnityScripts\AwesomiumUnityWebTexture_ : 
+	* Contains the main class you need to use to render webpages. The class derives from MonoBehaviour and should be attached to a GameObject. A single instance of this class represent a single webpage. Input, interactiveness, etc. are all handled by this class. Note that this class acts as a wrapper to a WebView and can serve as an example of how you could implement such logic yourself. The WebTexture utilizes the WebView's API to control the view.
+* _AwesomiumUnityScripts\AwesomiumUnityWebSession.cs_ :
+	* Provides an interface and data to customize certain settings that influence the session. Settings include things as switching on or off web audio, WebGL, HTML5 local storage, JavaScript, plugins (such as Flash), but also whether the session cache should be stored in memory or on disk, and in what exact location.
 
 #### AwesomiumUnityScripts\Examples
 
@@ -60,15 +68,15 @@ This folder contains simple examples to get you going. In most cases you can sim
 
 If an example is accompanied by a folder with the same name as the example script, it means that there is some HTML/CSS/JavaScript code that goes with it. These are generally loaded directly off of GitHub from within the example script.
 
-Building and using it all
+Using AwesomiumUnity
 --------------------------------
 
 ### Getting it to work in the Unity Editor
 
 * Do one of the following two options:
-	* 1) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to your Unity project's _Assets\Plugins_ folder.
+	* 1) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to your Unity project's _Assets\Plugins_ folder.
 	OR
-	* 2) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to your Unity project's _Assets\Plugins_ folder.
+	* 2) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to your Unity project's _Assets\Plugins_ folder.
 * Copy the following files from your Awesomium SDK installation directory's _build\bin_ folder to your Unity installation directory's _Editor_ folder (**NOT** your project _Assets\Editor_ folder!).
 	* _awesomium_process.exe_
 	* _awesomium.dll_
@@ -89,9 +97,9 @@ Building and using it all
 ### Getting it to work for a standalone .exe
 
 * Do one of the following two options:
-	* 1) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to the same folder as your executable.
+	* 1) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to the same folder as your executable.
 	OR
-	* 2) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to the same folder as your executable.
+	* 2) Build the MSVC project and copy the resulting .DLL file (_AwesomiumUnity.dll_) to the same folder as your executable.
 * Copy the following files from your Awesomium SDK installation directory's _build\bin_ folder to the same folder as your executable.
 	* _awesomium_process.exe_
 	* _awesomium.dll_
