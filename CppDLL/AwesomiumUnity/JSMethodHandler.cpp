@@ -1,23 +1,16 @@
 #include "JSMethodHandler.h"
+#include "WebCore.h"
 #include <Awesomium/JSValue.h>
 
 namespace AwesomiumUnity
 {
 
-namespace
-{
-	OnMethodCall g_OnMethodCallCallback = 0;
-	OnMethodCallWithReturnValue g_OnMethodCallWithReturnValueCallback = 0;
-}
-
 JSMethodHandler::JSMethodHandler()
 {
-
 }
 
 JSMethodHandler::~JSMethodHandler()
 {
-
 }
 
 void JSMethodHandler::OnMethodCall(		Awesomium::WebView* caller,
@@ -25,8 +18,8 @@ void JSMethodHandler::OnMethodCall(		Awesomium::WebView* caller,
 										const Awesomium::WebString& method_name,
 										const Awesomium::JSArray& args )
 {
-	if (g_OnMethodCallCallback)
-		g_OnMethodCallCallback(caller, method_name.data());
+	if (AwesomiumUnity::g_WebView_JavaScriptMethodCallCallback)
+		AwesomiumUnity::g_WebView_JavaScriptMethodCallCallback(caller, method_name.data());
 }
 
 Awesomium::JSValue JSMethodHandler::OnMethodCallWithReturnValue(	Awesomium::WebView* caller,
@@ -34,19 +27,9 @@ Awesomium::JSValue JSMethodHandler::OnMethodCallWithReturnValue(	Awesomium::WebV
 																	const Awesomium::WebString& method_name,
 																	const Awesomium::JSArray& args )
 {
-	if (g_OnMethodCallWithReturnValueCallback)
-		return g_OnMethodCallWithReturnValueCallback(caller, method_name.data());
-	return Awesomium::JSValue(0);
+	if (AwesomiumUnity::g_WebView_JavaScriptMethodCallWithReturnValueCallback)
+		return AwesomiumUnity::g_WebView_JavaScriptMethodCallWithReturnValueCallback(caller, method_name.data());
+	return Awesomium::JSValue::Null();
 }
 
-}
-
-extern "C" EXPORT_API void awe_jsmethodhandler_register_callback_onmethodcall( AwesomiumUnity::OnMethodCall _Callback )
-{
-	AwesomiumUnity::g_OnMethodCallCallback = _Callback;
-}
-
-extern "C" EXPORT_API void awe_jsmethodhandler_register_callback_onmethodcallwithreturnvalue( AwesomiumUnity::OnMethodCallWithReturnValue _Callback )
-{
-	AwesomiumUnity::g_OnMethodCallWithReturnValueCallback = _Callback;
 }

@@ -18,6 +18,10 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	private bool m_MouseIsOver = false;
 	private bool m_HasFocus = false;
 
+    [SerializeField]
+	private bool m_InitializeOnStart = true;
+	private bool m_HasBeenInitialized = false;
+
 	[SerializeField]	// Only for testing purposes.
 	private Texture2D m_Texture = null;
 	
@@ -27,8 +31,13 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	{
 		get	
 		{
-			return m_WebView;	
-		}
+			return m_WebView;
+        }
+        set
+        {
+            if (value != null)
+                m_WebView = value;
+        }
 	}
 	
 	public Texture2D WebTexture
@@ -54,13 +63,14 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 			}
 		}
 	}
-	
-	// Use this for initialization
-	void Awake () 
+
+	public void Initialize()
 	{
+		m_HasBeenInitialized = true;
+
 		AwesomiumUnityWebCore.EnsureInitialized();
 		
-		// Call resize which will create a texture and a webview for us since both do not exist yet at this point.
+		// Call resize which will create a texture and a webview for us if they do not exist yet at this point.
 		Resize(m_Width, m_Height);
 		
 		if (guiTexture)
@@ -71,32 +81,38 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 		{		
 			renderer.material.mainTexture = m_Texture;
 			renderer.material.mainTextureScale = new Vector2(	Mathf.Abs(renderer.material.mainTextureScale.x) * (m_FlipX ? -1.0f : 1.0f),
-																Mathf.Abs(renderer.material.mainTextureScale.y) * (m_FlipY ? -1.0f : 1.0f));
+			                                                 Mathf.Abs(renderer.material.mainTextureScale.y) * (m_FlipY ? -1.0f : 1.0f));
 		}
 		else
 		{
 			Debug.LogWarning("There is no Renderer or guiTexture attached to this GameObject! AwesomiumUnityWebTexture will render to a texture but it will not be visible.");
 		}
 		
-		// Now load the URL.
-		// IMPORTANT: For some reason, a WebView MUST have loaded something atleast ONCE before calling ANY other function on it (think input injection).
-		// Therefore, there is no option available to delay the loading of the URL and it is forced in this constructor. (Note how we wait until the loading
-		// is complete before we exit the constructor).
-		LoadURL(m_URL);
-		
-		while (m_WebView.IsLoading)
-		{
-			AwesomiumUnityWebCore.Update();	
-		}
-		
 		m_WebView.SetTransparent(m_Transparent);
+	}
+	
+	// Use this for initialization
+	void Start () 
+	{
+		if (m_InitializeOnStart && !m_HasBeenInitialized)
+		{
+			Initialize ();
+
+			// Now load the URL.
+			LoadURL(m_URL);
+			
+			//while (m_WebView.IsLoading)
+			//{
+			//    AwesomiumUnityWebCore.Update();	
+			//}
+		}
 	}
 	
 	void OnMouseOver()
 	{
 		if (!m_Interactive) return;
 		
-		if (m_WebView != null && !m_WebView.IsLoading)
+		if (m_WebView != null /*&& !m_WebView.IsLoading*/)
 		{
 			if (guiTexture)
 			{
@@ -124,7 +140,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 					if (m_FlipY)
 						v.y = m_WebView.Height - v.y;
 					
-					Debug.Log("MOUSE: " + v);
+					//Debug.Log("MOUSE: " + v);
 					m_WebView.InjectMouseMove((int)v.x, (int)v.y);
 				}	
 			}
@@ -140,11 +156,11 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	{
 		m_MouseIsOver = false;
 	}
-	
+
 	void OnGUI()
 	{
 		// This function should do input injection (if enabled), and drawing.
-		if (m_WebView == null || m_WebView.IsLoading) return;
+		if (m_WebView == null /*|| m_WebView.IsLoading*/) return;
 		
 		Event e = Event.current;
 		
@@ -154,7 +170,10 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 		{
 			if (m_WebView.IsDirty)
 			{
-				m_WebView.CopyBufferToTexture(m_Texture.GetNativeTexturePtr(), m_Texture.width, m_Texture.height);
+                if (m_Texture == null)
+                    Debug.LogError("The WebTexture does not have a texture assigned and will not paint.");
+                else
+                    m_WebView.CopyBufferToTexture(m_Texture.GetNativeTexturePtr(), m_Texture.width, m_Texture.height);
 			}
 			break;	
 		}
@@ -177,7 +196,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 			if (m_MouseIsOver)
 			{
 				Focus();
-				m_WebView.InjectMouseUp(MapMouseButtons(Event.current.button));
+                m_WebView.InjectMouseUp(MapMouseButtons(Event.current.button));
 			}
 			else
 			{
@@ -198,7 +217,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	                keyEvent.Type = AwesomiumUnityWebKeyType.KeyDown;
 	                keyEvent.VirtualKeyCode = MapKeys(e);
 	                keyEvent.Modifiers = MapModifiers(e);
-	                m_WebView.InjectKeyboardEvent(keyEvent);
+                    m_WebView.InjectKeyboardEvent(keyEvent);
 	            }
 	            else
 	            {
@@ -206,7 +225,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	                keyEvent.Type = AwesomiumUnityWebKeyType.Char;
 	                keyEvent.Text = new ushort[] { e.character, 0, 0, 0 };
 	                keyEvent.Modifiers = MapModifiers(e);
-	                m_WebView.InjectKeyboardEvent(keyEvent);
+                    m_WebView.InjectKeyboardEvent(keyEvent);
 	            }
 			}
 			break;	
@@ -222,7 +241,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	            keyEvent.Type = AwesomiumUnityWebKeyType.KeyUp;
 	            keyEvent.VirtualKeyCode = MapKeys(e);
 	            keyEvent.Modifiers = MapModifiers(e);
-	            m_WebView.InjectKeyboardEvent(keyEvent);
+                m_WebView.InjectKeyboardEvent(keyEvent);
 			}
 			break;	
 		}
@@ -233,7 +252,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 			
 			if (m_HasFocus)
 			{
-				m_WebView.InjectMouseWheel((int)e.delta.y * -10, (int)e.delta.x);
+                m_WebView.InjectMouseWheel((int)e.delta.y * -10, (int)e.delta.x);
 			}
 			break;	
 		}
@@ -449,7 +468,11 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	
 	void OnApplicationQuit()
 	{
-			
+        if (m_WebView != null)
+        {
+            m_WebView.Destroy();
+            m_WebView = null;
+        }	
 	}
 	
 	void Focus()

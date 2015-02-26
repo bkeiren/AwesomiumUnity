@@ -101,7 +101,9 @@
     <ClCompile Include="UnityGraphicsDevice.cpp" />
     <ClCompile Include="UnitySurface.cpp" />
     <ClCompile Include="UnitySurfaceFactory.cpp" />
+    <ClCompile Include="ViewListener.cpp" />
     <ClCompile Include="WebCore.cpp" />
+    <ClCompile Include="WebSession.cpp" />
     <ClCompile Include="WebView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +113,9 @@
     <ClInclude Include="UnityPlugin.h" />
     <ClInclude Include="UnitySurface.h" />
     <ClInclude Include="UnitySurfaceFactory.h" />
+    <ClInclude Include="ViewListener.h" />
     <ClInclude Include="WebCore.h" />
+    <ClInclude Include="WebSession.h" />
     <ClInclude Include="WebView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -33,6 +33,7 @@ extern "C" void EXPORT_API UnitySetGraphicsDevice( void* device, int deviceType,
 	switch (eventType)
 	{
 	case kGfxDeviceEventInitialize:
+	case kGfxDeviceEventAfterReset:
 		{
 			g_GraphicsDevice = device;
 			g_GraphicsDeviceType = deviceType;
@@ -59,15 +60,11 @@ extern "C" void EXPORT_API UnitySetGraphicsDevice( void* device, int deviceType,
 			}
 			break;
 		}
-	case kGfxDeviceEventShutdown:
-		{
-			break;
-		}
 	case kGfxDeviceEventBeforeReset:
 		{
 			break;
 		}
-	case kGfxDeviceEventAfterReset:
+	case kGfxDeviceEventShutdown:
 		{
 			break;
 		}

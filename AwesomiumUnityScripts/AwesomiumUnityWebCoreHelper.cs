@@ -52,10 +52,10 @@ public class AwesomiumUnityWebCoreHelper : MonoBehaviour
 		AwesomiumUnityWebCore.EnsureInitialized();
 		DontDestroyOnLoad(this.gameObject);
 	}
-	
-	void Update () 
+
+	void LateUpdate () 
 	{
-		AwesomiumUnityWebCore.Update();
+	    AwesomiumUnityWebCore.Update();
 	}
 	
 	void DoShutdown()

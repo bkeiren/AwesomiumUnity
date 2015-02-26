@@ -10,6 +10,51 @@
 
 using namespace Awesomium;
 
+namespace AwesomiumUnity
+{
+
+void ExecuteCallbacksForJSValue(WebView* _Instance, Awesomium::JSValue _Value, int _ExecutionID)
+{
+	if (_Value.IsBoolean() && AwesomiumUnity::g_WebView_JavaScriptResultBoolCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultBoolCallback(_Instance, _Value.ToBoolean(), _ExecutionID);
+	}
+	else if (_Value.IsInteger() && AwesomiumUnity::g_WebView_JavaScriptResultIntCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultIntCallback(_Instance, _Value.ToInteger(), _ExecutionID);
+	}
+	else if (_Value.IsDouble() && AwesomiumUnity::g_WebView_JavaScriptResultFloatCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultFloatCallback(_Instance, (float)_Value.ToDouble(), _ExecutionID);
+	}
+	else if (_Value.IsString() && AwesomiumUnity::g_WebView_JavaScriptResultStringCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultStringCallback(_Instance, _Value.ToString().data(), _ExecutionID);
+	}
+	else if (_Value.IsNull() && AwesomiumUnity::g_WebView_JavaScriptResultNullCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultNullCallback(_Instance, _ExecutionID);
+	}
+	else if (_Value.IsUndefined() && AwesomiumUnity::g_WebView_JavaScriptResultUndefinedCallback != nullptr)
+	{
+		AwesomiumUnity::g_WebView_JavaScriptResultUndefinedCallback(_Instance, _ExecutionID);
+	}
+	else if (_Value.IsArray() && AwesomiumUnity::g_WebView_JavaScriptResultArrayCallback != nullptr)
+	{
+		Awesomium::JSArray array = _Value.ToArray();
+		AwesomiumUnity::g_WebView_JavaScriptResultArrayCallback(_Instance, array.size(), _ExecutionID);
+		for (unsigned int i = 0; i < array.size(); ++i)
+		{
+			Awesomium::JSValue array_item = array.At(i);
+			ExecuteCallbacksForJSValue(_Instance, array_item, _ExecutionID);
+		}
+		AwesomiumUnity::g_WebView_JavaScriptResultArrayCallback(_Instance, -1, _ExecutionID);	// Call the array callback a second time, this time passing -1 as the length to indicate that array iteration has finished.
+																				// We do this because we can not know how many other callbacks we will get in between (JS arrays can contain multiple value types as well as other arrays).
+	}
+}
+
+}
+
 extern "C" EXPORT_API void awe_webview_loadurl( WebView* _Instance, char* _URL )	// From C#: [MarshalAs(UnmanagedType.LPStr)]
 {
 	if (_Instance && _URL)
@@ -64,7 +109,7 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 
 	AwesomiumUnity::UnitySurface* surface = (AwesomiumUnity::UnitySurface*)_Instance->surface();
 
-	// Make sure our surface is not NULL-- it may be NULL if the WebView 
+	// Make sure our surface is not null -- it may be null if the WebView 
 	// process has crashed.
 	if (surface != 0) 
 	{
@@ -84,7 +129,7 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 				D3DSURFACE_DESC desc;
 				d3dtex->GetLevelDesc (0, &desc);
 				D3DLOCKED_RECT lr;
-				d3dtex->LockRect (0, &lr, NULL, 0);
+				d3dtex->LockRect (0, &lr, nullptr, 0);
 
 // 				int surfaceWidth = surface->width();
 // 				int surfaceHeight = surface->height();
@@ -118,7 +163,7 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 		// D3D11 case
 		if (g_GraphicsDeviceType == kGfxRendererD3D11)
 		{
-			ID3D11DeviceContext* ctx = NULL;
+			ID3D11DeviceContext* ctx = nullptr;
 			g_D3D11GraphicsDevice->GetImmediateContext (&ctx);
 
 			// update native texture from code
@@ -135,7 +180,7 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 				// part of the texture.
 				
 
-				ctx->UpdateSubresource (d3dtex, 0, NULL, data, desc.Width*4, 0);
+				ctx->UpdateSubresource (d3dtex, 0, nullptr, data, desc.Width*4, 0);
 				delete[] data;
 			}
 
@@ -172,7 +217,11 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 extern "C" EXPORT_API int awe_webview_surface_width( WebView* _Instance )
 {
 	if (_Instance)
-		return ((AwesomiumUnity::UnitySurface*)_Instance->surface())->width();
+	{
+		AwesomiumUnity::UnitySurface* surface = (AwesomiumUnity::UnitySurface*)_Instance->surface();
+		if (surface)
+			return surface->width();
+	}
 	
 	return -1;
 }
@@ -180,7 +229,11 @@ extern "C" EXPORT_API int awe_webview_surface_width( WebView* _Instance )
 extern "C" EXPORT_API int awe_webview_surface_height( WebView* _Instance )
 {	
 	if (_Instance)
-		return ((AwesomiumUnity::UnitySurface*)_Instance->surface())->height();
+	{
+		AwesomiumUnity::UnitySurface* surface = (AwesomiumUnity::UnitySurface*)_Instance->surface();
+		if (surface)
+			return surface->height();
+	}
 
 	return -1;
 }
@@ -188,7 +241,11 @@ extern "C" EXPORT_API int awe_webview_surface_height( WebView* _Instance )
 extern "C" EXPORT_API bool awe_webview_surface_isdirty( WebView* _Instance )
 {	
 	if (_Instance)
-		return ((AwesomiumUnity::UnitySurface*)_Instance->surface())->is_dirty();
+	{
+		AwesomiumUnity::UnitySurface* surface = (AwesomiumUnity::UnitySurface*)_Instance->surface();
+		if (surface)
+			return surface->is_dirty();
+	}
 
 	return false;
 }
@@ -241,13 +298,31 @@ extern "C" EXPORT_API void awe_webview_resize( WebView* _Instance, int _Width, i
 		_Instance->Resize(_Width, _Height);
 }
 
-extern "C" EXPORT_API void awe_webview_executejavascript( WebView* _Instance, char* _Script )
+extern "C" EXPORT_API void awe_webview_executejavascript( WebView* _Instance, char* _Script, int _ExecutionID )
 {
-	if (_Instance)
-	{
-		_Instance->ExecuteJavascript(WSLit(_Script), WebString());
-	}
+	if (_Instance == nullptr)
+		return;
+
+	_Instance->ExecuteJavascript(WSLit(_Script), WebString());
+
+	if (AwesomiumUnity::g_WebView_JavaScriptExecFinishedCallback != nullptr)
+		AwesomiumUnity::g_WebView_JavaScriptExecFinishedCallback(_Instance, _ExecutionID);
 }
+
+
+extern "C" EXPORT_API void awe_webview_executejavascriptwithresult( WebView* _Instance, char* _Script, int _ExecutionID )
+{
+	if (_Instance == nullptr)
+		return;
+
+	Awesomium::JSValue result = _Instance->ExecuteJavascriptWithResult(WSLit(_Script), WebString());
+
+	AwesomiumUnity::ExecuteCallbacksForJSValue(_Instance, result, _ExecutionID);
+
+	if (AwesomiumUnity::g_WebView_JavaScriptExecFinishedCallback != nullptr)
+		AwesomiumUnity::g_WebView_JavaScriptExecFinishedCallback(_Instance, _ExecutionID);
+}
+
 
 extern "C" EXPORT_API void awe_webview_focus( WebView* _Instance )
 {
@@ -319,58 +394,10 @@ extern "C" EXPORT_API void awe_webview_js_setmethod( WebView* _Instance, char* _
 {
 	if (_Instance)
 	{
-		JSObject* jsObject = AwesomiumUnity::FindJSUnityObjectForWebView(_Instance);
-		if (jsObject != 0)
+		Awesomium::JSObject* jsObject = AwesomiumUnity::FindJSUnityObjectForWebView(_Instance);
+		if (jsObject != nullptr)
 		{
 			jsObject->SetCustomMethod(WSLit(_MethodName), _HasReturnValue);
 		}
 	}
-}
-
-extern "C" EXPORT_API void awe_webview_register_callback_beginloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::BeginLoadingFrameCallback _Callback )
-{
-	if (!_Instance)
-		return;
-
-	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
-	if (!loadListener)
-		return;
-
-	loadListener->RegisterBeginLoadingFrameCallback(_Callback);
-}
-
-extern "C" EXPORT_API void awe_webview_register_callback_failloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FailLoadingFrameCallback _Callback )
-{
-	if (!_Instance)
-		return;
-
-	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
-	if (!loadListener)
-		return;
-
-	loadListener->RegisterFailLoadingFrameCallback(_Callback);
-}
-
-extern "C" EXPORT_API void awe_webview_register_callback_finishloadingframe( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::FinishLoadingFrameCallback _Callback )
-{
-	if (!_Instance)
-		return;
-
-	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
-	if (!loadListener)
-		return;
-
-	loadListener->RegisterFinishLoadingFrameCallback(_Callback);
-}
-
-extern "C" EXPORT_API void awe_webview_register_callback_documentready( Awesomium::WebView* _Instance, AwesomiumUnity::LoadListener::DocumentReadyCallback _Callback )
-{
-	if (!_Instance)
-		return;
-
-	AwesomiumUnity::LoadListener* loadListener = (AwesomiumUnity::LoadListener*)_Instance->load_listener();
-	if (!loadListener)
-		return;
-
-	loadListener->RegisterDocumentReadyCallback(_Callback);
 }

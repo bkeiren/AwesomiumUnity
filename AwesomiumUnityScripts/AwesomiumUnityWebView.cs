@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;	// For DllImport.
 public class AwesomiumUnityWebView
 {
 	internal const string DllName = "AwesomiumUnity";
-	
+
+	/// DLL Imported functions.
 	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_loadurl( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _URL );
 	
@@ -59,7 +60,10 @@ public class AwesomiumUnityWebView
 	extern static private void awe_webview_resize( System.IntPtr _Instance, int _Width, int _Height );
 	
 	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-	extern static private void awe_webview_executejavascript( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _Script );
+	extern static private void awe_webview_executejavascript( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _Script, int _ExecutionID);
+	
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_executejavascriptwithresult( System.IntPtr _Instance, [MarshalAs(UnmanagedType.LPStr)]string _Script, int _ExecutionID);
 	
 	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_focus( System.IntPtr _Instance );
@@ -105,26 +109,216 @@ public class AwesomiumUnityWebView
 
 	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 	extern static private void awe_webview_register_callback_documentready( System.IntPtr _Instance, System.IntPtr _Callback );
-
 	
-	public delegate void OnJavaScriptMethodCall();
+	[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+	extern static private void awe_webview_register_callback_changeaddressbar( System.IntPtr _Instance, System.IntPtr _Callback );
 
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void OnBeginLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int64 _FrameID, bool _IsMainFrame, bool _IsErrorPage);
 
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void OnFailLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int32 _ErrorCode, [MarshalAs(UnmanagedType.LPStr)]string _ErrorDesc, System.Int64 _FrameID, bool _IsMainFrame);
+	/// Delegates.
+    public delegate void OnJavaScriptMethodCall(AwesomiumUnityWebView _Caller);
 
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void OnFinishLoadingFrame([MarshalAs(UnmanagedType.LPStr)]string _URL, System.Int64 _FrameID, bool _IsMainFrame);
+	public delegate void OnBeginLoadingFrame(AwesomiumUnityWebView _Caller, string _URL, System.Int64 _FrameID, bool _IsMainFrame, bool _IsErrorPage);
+    public delegate void OnFailLoadingFrame(AwesomiumUnityWebView _Caller, string _URL, System.Int32 _ErrorCode, string _ErrorDesc, System.Int64 _FrameID, bool _IsMainFrame);
+    public delegate void OnFinishLoadingFrame(AwesomiumUnityWebView _Caller, string _URL, System.Int64 _FrameID, bool _IsMainFrame);
+    public delegate void OnDocumentReady(AwesomiumUnityWebView _Caller, string _URL);
+    
+    public delegate void OnChangeAddressBar(AwesomiumUnityWebView _Caller, string _URL);
+    public delegate void OnAddConsoleMessage(AwesomiumUnityWebView _Caller, string _Message, int _LineNumber, string _Source);
+    public delegate void OnShowCreatedWebView(AwesomiumUnityWebView _Caller, AwesomiumUnityWebView _NewView, string _OpenerURL, string _TargetURL, bool _IsPopUp);
 
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void OnDocumentReady([MarshalAs(UnmanagedType.LPStr)]string _URL);
+    // The following delegates define functions which are used as callbacks when a JavaScript action is executed.
+    public delegate void OnJavaScriptExecFinished(AwesomiumUnityWebView _Caller);
+    public delegate void OnJavaScriptResultBool(AwesomiumUnityWebView _Caller, bool _Bool);
+    public delegate void OnJavaScriptResultInt(AwesomiumUnityWebView _Caller, int _Integer);
+    public delegate void OnJavaScriptResultFloat(AwesomiumUnityWebView _Caller, float _Float);
+    public delegate void OnJavaScriptResultString(AwesomiumUnityWebView _Caller, string _String);
+    public delegate void OnJavaScriptResultNullOrUndefined(AwesomiumUnityWebView _Caller);
+    public delegate void OnJavaScriptResultArray(AwesomiumUnityWebView _Caller, int _Length);
+
+
+    // This class can be instanced by users and filled out to provide callbacks for a javascript execution.
+    // TODO: Change this to events to allow for multiple callbacks.
+    public class JavaScriptExecutionCallbacks
+    {
+        public OnJavaScriptExecFinished           ExecutionFinished;
+        public OnJavaScriptResultBool             BoolResult;
+        public OnJavaScriptResultInt              IntResult;
+        public OnJavaScriptResultFloat            FloatResult;
+        public OnJavaScriptResultString           StringResult;
+        public OnJavaScriptResultNullOrUndefined  NullResult;
+        public OnJavaScriptResultNullOrUndefined  UndefinedResult;
+        public OnJavaScriptResultArray            ArrayResult;
+    }
+
+    private Dictionary<string, OnJavaScriptMethodCall>      m_JavaScriptMethodCallCallbacks = new Dictionary<string, OnJavaScriptMethodCall>();  // Callbacks for when specific JavaScript methods are called.
+    private Dictionary<int, JavaScriptExecutionCallbacks>   m_JavaScriptCallbacks = new Dictionary<int, JavaScriptExecutionCallbacks>();         // Callbacks for when javascript events happen (execution finished, result available).
+    private int                                             m_NextJavaScriptExecutionID = 1;
+
+    private System.IntPtr m_Instance                        = System.IntPtr.Zero;
+
+    /// Events.
+    public event OnBeginLoadingFrame    BeginLoadingFrame;
+    public event OnFailLoadingFrame     FailLoadingFrame;
+    public event OnFinishLoadingFrame   FinishLoadingFrame;
+    public event OnDocumentReady        DocumentReady;
+
+    public event OnChangeAddressBar     ChangeAddressBar;
+    public event OnAddConsoleMessage    AddConsoleMessage;
+    public event OnShowCreatedWebView   ShowCreatedWebView;
+
+
+	public static void TriggerBeginLoadingFrame(System.IntPtr _WebViewInstance, System.Int64 _FrameID, bool _IsMainFrame, string _URL, bool _IsErrorPage)
+	{
+		AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr (_WebViewInstance);
+        if (view != null && view.BeginLoadingFrame != null)
+            view.BeginLoadingFrame(view, _URL, _FrameID, _IsMainFrame, _IsErrorPage);
+	}
+
+    public static void TriggerFailLoadingFrame(System.IntPtr _WebViewInstance, System.Int64 _FrameID, bool _IsMainFrame, string _URL, System.Int32 _ErrorCode, string _ErrorDesc)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.FailLoadingFrame != null)
+            view.FailLoadingFrame(view, _URL, _ErrorCode, _ErrorDesc, _FrameID, _IsMainFrame);
+    }
+
+    public static void TriggerFinishLoadingFrame(System.IntPtr _WebViewInstance, System.Int64 _FrameID, bool _IsMainFrame, string _URL)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.FinishLoadingFrame != null)
+            view.FinishLoadingFrame(view, _URL, _FrameID, _IsMainFrame);
+    }
+
+    public static void TriggerDocumentReady(System.IntPtr _WebViewInstance, string _URL)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.DocumentReady != null)
+            view.DocumentReady(view, _URL);
+    }
+
+    public static void TriggerChangeAddressBar(System.IntPtr _WebViewInstance, string _URL)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.ChangeAddressBar != null)
+            view.ChangeAddressBar(view, _URL);
+    }
+
+    public static void TriggerAddConsoleMessage(System.IntPtr _WebViewInstance, string _Message, int _LineNumber, string _Source)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.AddConsoleMessage != null)
+            view.AddConsoleMessage(view, _Message, _LineNumber, _Source);
+    }
+
+    public static void TriggerShowCreatedWebView(System.IntPtr _WebViewInstance, System.IntPtr _NewInstance, string _OpenerURL, string _TargetURL, bool _IsPopUp)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null && view.ShowCreatedWebView != null)
+        {
+			AwesomiumUnityWebView new_view = AwesomiumUnityWebCore.RegisterExistingWebView(_NewInstance);
+            view.ShowCreatedWebView(view, new_view, _OpenerURL, _TargetURL, _IsPopUp);
+        }
+    }
+
+    public static void TriggerJavaScriptExecFinished(System.IntPtr _WebViewInstance, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.ExecutionFinished != null)
+        {
+            callbacks.ExecutionFinished(caller);
+
+            // Now that execution has finished we can remove the callbacks from our dictionary.
+            caller.m_JavaScriptCallbacks.Remove(_ExecutionID);
+        }
+    }
+
+    public static void TriggerJavaScriptResultCallbackBool(System.IntPtr _WebViewInstance, bool _Bool, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.BoolResult != null)
+            callbacks.BoolResult(caller, _Bool);
+    }
+
+    public static void TriggerJavaScriptResultCallbackInt(System.IntPtr _WebViewInstance, int _Integer, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.IntResult != null)
+            callbacks.IntResult(caller, _Integer);
+    }
+
+    public static void TriggerJavaScriptResultCallbackFloat(System.IntPtr _WebViewInstance, float _Float, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.FloatResult != null)
+            callbacks.FloatResult(caller, _Float);
+    }
+
+    public static void TriggerJavaScriptResultCallbackString(System.IntPtr _WebViewInstance, string _String, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.StringResult != null)
+            callbacks.StringResult(caller, _String);
+    }
+
+    public static void TriggerJavaScriptResultCallbackNull(System.IntPtr _WebViewInstance, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.NullResult != null)
+            callbacks.NullResult(caller);
+    }
+
+    public static void TriggerJavaScriptResultCallbackUndefined(System.IntPtr _WebViewInstance, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.UndefinedResult != null)
+            callbacks.UndefinedResult(caller);
+    }
+
+    public static void TriggerJavaScriptResultCallbackArray(System.IntPtr _WebViewInstance, int _Length, int _ExecutionID)
+    {
+        AwesomiumUnityWebView caller = null;
+        JavaScriptExecutionCallbacks callbacks = FindJavaScriptCallbacksForExecutionID(_WebViewInstance, _ExecutionID, out caller);
+        if (callbacks != null && callbacks.ArrayResult != null)
+            callbacks.ArrayResult(caller, _Length);
+    }
+
+    public static void TriggerJavaScriptMethodCall(System.IntPtr _WebViewInstance, string _MethodName)
+    {
+        AwesomiumUnityWebView view = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        if (view != null)
+            view.CallBoundJavaScriptCallback(_MethodName);
+        else
+            Debug.LogWarning("TriggerJavaScriptMethodCall: Could not find a matching AwesomiumUnityWebView even though there should exist one!");
+    }
+
+    // TODO!!!! RETURN VALUE!
+    public static void TriggerJavaScriptMethodCallWithReturnValue(System.IntPtr _WebViewInstance, string _MethodName)
+    {
+        Debug.Log("WORK IN PROGRESS FUNCTION -- RECEIVED FUNCTION CALL WITH RETURN VALUE: " + _MethodName);
+
+        // TODO: 
+        // Change delegate and this function to return an object corresponding to a native Awesomium::JSValue object.
+        // - Find the AwesomiumUnityWebView that corresponds to _WebViewCaller.
+        // - Find a registered callback for _MethodName.
+        // If a callback exists, call it and return it's return value.
+    }
+
+    private static JavaScriptExecutionCallbacks FindJavaScriptCallbacksForExecutionID(System.IntPtr _WebViewInstance, int _ExecutionID, out AwesomiumUnityWebView _Caller)
+    {
+        _Caller = AwesomiumUnityWebCore.FindWebViewByNativePtr(_WebViewInstance);
+        JavaScriptExecutionCallbacks callbacks = null;
+        if (_Caller != null)
+            _Caller.m_JavaScriptCallbacks.TryGetValue(_ExecutionID, out callbacks);
+
+        return callbacks;
+    }
 	
-	private Dictionary<string, OnJavaScriptMethodCall> m_CallbacksOnJavaScriptMethodCall = new Dictionary<string, OnJavaScriptMethodCall>();
-	
-
-	private System.IntPtr m_Instance = System.IntPtr.Zero;
 	
 	public System.IntPtr NativePtr
 	{
@@ -169,10 +363,7 @@ public class AwesomiumUnityWebView
 	}
 	
 	public void Destroy()
-	{
-		awe_webview_destroy(m_Instance);
-		m_Instance = System.IntPtr.Zero;
-		
+	{		
 		AwesomiumUnityWebCore._QueueWebViewForRemoval(this);
 	}
 	
@@ -245,10 +436,43 @@ public class AwesomiumUnityWebView
 	{
 		awe_webview_resize(m_Instance, _Width, _Height);	
 	}
+
+    private int AllocateJavaScriptExecutionID()
+    {
+        return ++m_NextJavaScriptExecutionID;
+    }
+
+    private int GetJavaScriptExecutionIDAndRegisterCallbacks(JavaScriptExecutionCallbacks _Callbacks)
+    {
+        int execID = AllocateJavaScriptExecutionID();
+        if (_Callbacks != null)
+        {
+            m_JavaScriptCallbacks.Add(execID, _Callbacks);
+        }
+        return execID;
+    }
 	
-	public void ExecuteJavaScript( string _Script )
+	public void ExecuteJavaScript( string _Script, OnJavaScriptExecFinished _ExecFinishedCallback )
 	{
-		awe_webview_executejavascript(m_Instance, _Script);	
+        JavaScriptExecutionCallbacks callbacks = null;
+        if (_ExecFinishedCallback != null)
+        {
+            callbacks = new JavaScriptExecutionCallbacks();
+            callbacks.ExecutionFinished += _ExecFinishedCallback;
+        }
+        int executionID = GetJavaScriptExecutionIDAndRegisterCallbacks(callbacks);
+		awe_webview_executejavascript(m_Instance, _Script, executionID);
+	}
+
+	// Executes the javascript script _Script on the webview and calls callback(s) for the result.
+	// If the result is an integer, the integer callback is called. If the result is a bool, the boolean callback is called (etc).
+	// If the result is an array, the array callback is first called with the length as one of its parameters. Then, for each element in the array
+	// the appropriate other callback is called (may recurse into another array callback). Finally, once the array iteration has finished
+	// the array callback is called once again, this time with its length parameter being -1.
+	public void ExecuteJavaScriptWithResult( string _Script, JavaScriptExecutionCallbacks _Callbacks )
+	{
+        int executionID = GetJavaScriptExecutionIDAndRegisterCallbacks(_Callbacks);
+        awe_webview_executejavascriptwithresult(m_Instance, _Script, executionID);	
 	}
 	
 	public void Focus()
@@ -306,42 +530,26 @@ public class AwesomiumUnityWebView
 		if (_Callback == null)
 			return;
 		
-		m_CallbacksOnJavaScriptMethodCall[_MethodName] = _Callback;
+		m_JavaScriptMethodCallCallbacks[_MethodName] = _Callback;
 		
 		awe_webview_js_setmethod(m_Instance, _MethodName, false);
 	}
 	
 	public void UnbindJavaScriptCallback( string _MethodName )
 	{
-		m_CallbacksOnJavaScriptMethodCall.Remove(_MethodName);	
+        m_JavaScriptMethodCallCallbacks.Remove(_MethodName);	
 	}
 	
 	public void CallBoundJavaScriptCallback( string _MethodName )
 	{
 		OnJavaScriptMethodCall callback = null;
-		if (m_CallbacksOnJavaScriptMethodCall.TryGetValue(_MethodName, out callback))
-		{
-			callback();
-		}
+        if (m_JavaScriptMethodCallCallbacks.TryGetValue(_MethodName, out callback))
+            callback(this);
 	}
 
-	public void RegisterBeginLoadingFrameCallback( OnBeginLoadingFrame _Callback )
-	{
-		awe_webview_register_callback_beginloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
-	}
-
-	public void RegisterFailLoadingFrameCallback( OnFailLoadingFrame _Callback )
-	{
-		awe_webview_register_callback_failloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
-	}
-
-	public void RegisterFinishLoadingFrameCallback( OnFinishLoadingFrame _Callback )
-	{
-		awe_webview_register_callback_finishloadingframe (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
-	}
-
-	public void RegisterDocumentReadyCallback( OnDocumentReady _Callback )
-	{
-		awe_webview_register_callback_documentready (NativePtr, Marshal.GetFunctionPointerForDelegate(_Callback));
-	}
+    public void ClearNativePtr()
+    {
+        Debug.Log("Clearing native pointer for web view.");
+        m_Instance = System.IntPtr.Zero;
+    }
 }
