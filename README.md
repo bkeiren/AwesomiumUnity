@@ -14,7 +14,7 @@ The wrapper consist of a custom native code C++ DLL which simply wraps Awesomium
 
 **The current state of the project is:** 
 
-**_Functionality in development, code structure and architecture not completely final._**
+**_Stable, most important features implemented. Other functionality in development, code structure and architecture not completely final._**
 
 Projects using AwesomiumUnity
 --------------------------------
