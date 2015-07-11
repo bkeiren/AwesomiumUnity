@@ -1,0 +1,337 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		636B61D31B51C8200054DA44 /* Awesomium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B61D21B51C8200054DA44 /* Awesomium.framework */; };
+		63DC3AA71B41236B006D01AB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DC3AA61B41236B006D01AB /* OpenGL.framework */; };
+		63F88B631B4076B800069DE2 /* JSMethodHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B511B4076B800069DE2 /* JSMethodHandler.cpp */; };
+		63F88B641B4076B800069DE2 /* LoadListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B531B4076B800069DE2 /* LoadListener.cpp */; };
+		63F88B651B4076B800069DE2 /* UnityGraphicsDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B551B4076B800069DE2 /* UnityGraphicsDevice.cpp */; };
+		63F88B661B4076B800069DE2 /* UnitySurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B571B4076B800069DE2 /* UnitySurface.cpp */; };
+		63F88B671B4076B800069DE2 /* UnitySurfaceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B591B4076B800069DE2 /* UnitySurfaceFactory.cpp */; };
+		63F88B681B4076B800069DE2 /* ViewListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B5B1B4076B800069DE2 /* ViewListener.cpp */; };
+		63F88B691B4076B800069DE2 /* WebCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B5D1B4076B800069DE2 /* WebCore.cpp */; };
+		63F88B6A1B4076B800069DE2 /* WebSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B5F1B4076B800069DE2 /* WebSession.cpp */; };
+		63F88B6B1B4076B800069DE2 /* WebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B611B4076B800069DE2 /* WebView.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		636B61D21B51C8200054DA44 /* Awesomium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Awesomium.framework; path = ../../../../../../Library/Frameworks/Awesomium.framework; sourceTree = "<group>"; };
+		63DC3AA61B41236B006D01AB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		63F88B461B40756F00069DE2 /* AwesomiumUnity.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AwesomiumUnity.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		63F88B4A1B40756F00069DE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63F88B501B4076B800069DE2 /* GraphicsInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicsInclude.h; path = ../../../Code/GraphicsInclude.h; sourceTree = "<group>"; };
+		63F88B511B4076B800069DE2 /* JSMethodHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JSMethodHandler.cpp; path = ../../../Code/JSMethodHandler.cpp; sourceTree = "<group>"; };
+		63F88B521B4076B800069DE2 /* JSMethodHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSMethodHandler.h; path = ../../../Code/JSMethodHandler.h; sourceTree = "<group>"; };
+		63F88B531B4076B800069DE2 /* LoadListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadListener.cpp; path = ../../../Code/LoadListener.cpp; sourceTree = "<group>"; };
+		63F88B541B4076B800069DE2 /* LoadListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadListener.h; path = ../../../Code/LoadListener.h; sourceTree = "<group>"; };
+		63F88B551B4076B800069DE2 /* UnityGraphicsDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnityGraphicsDevice.cpp; path = ../../../Code/UnityGraphicsDevice.cpp; sourceTree = "<group>"; };
+		63F88B561B4076B800069DE2 /* UnityPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnityPlugin.h; path = ../../../Code/UnityPlugin.h; sourceTree = "<group>"; };
+		63F88B571B4076B800069DE2 /* UnitySurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitySurface.cpp; path = ../../../Code/UnitySurface.cpp; sourceTree = "<group>"; };
+		63F88B581B4076B800069DE2 /* UnitySurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitySurface.h; path = ../../../Code/UnitySurface.h; sourceTree = "<group>"; };
+		63F88B591B4076B800069DE2 /* UnitySurfaceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitySurfaceFactory.cpp; path = ../../../Code/UnitySurfaceFactory.cpp; sourceTree = "<group>"; };
+		63F88B5A1B4076B800069DE2 /* UnitySurfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitySurfaceFactory.h; path = ../../../Code/UnitySurfaceFactory.h; sourceTree = "<group>"; };
+		63F88B5B1B4076B800069DE2 /* ViewListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewListener.cpp; path = ../../../Code/ViewListener.cpp; sourceTree = "<group>"; };
+		63F88B5C1B4076B800069DE2 /* ViewListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewListener.h; path = ../../../Code/ViewListener.h; sourceTree = "<group>"; };
+		63F88B5D1B4076B800069DE2 /* WebCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebCore.cpp; path = ../../../Code/WebCore.cpp; sourceTree = "<group>"; };
+		63F88B5E1B4076B800069DE2 /* WebCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebCore.h; path = ../../../Code/WebCore.h; sourceTree = "<group>"; };
+		63F88B5F1B4076B800069DE2 /* WebSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebSession.cpp; path = ../../../Code/WebSession.cpp; sourceTree = "<group>"; };
+		63F88B601B4076B800069DE2 /* WebSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebSession.h; path = ../../../Code/WebSession.h; sourceTree = "<group>"; };
+		63F88B611B4076B800069DE2 /* WebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebView.cpp; path = ../../../Code/WebView.cpp; sourceTree = "<group>"; };
+		63F88B621B4076B800069DE2 /* WebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebView.h; path = ../../../Code/WebView.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		63F88B431B40756F00069DE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636B61D31B51C8200054DA44 /* Awesomium.framework in Frameworks */,
+				63DC3AA71B41236B006D01AB /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		63F88B3D1B40756F00069DE2 = {
+			isa = PBXGroup;
+			children = (
+				636B61D21B51C8200054DA44 /* Awesomium.framework */,
+				63DC3AA61B41236B006D01AB /* OpenGL.framework */,
+				63F88B481B40756F00069DE2 /* AwesomiumUnity */,
+				63F88B471B40756F00069DE2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		63F88B471B40756F00069DE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63F88B461B40756F00069DE2 /* AwesomiumUnity.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63F88B481B40756F00069DE2 /* AwesomiumUnity */ = {
+			isa = PBXGroup;
+			children = (
+				63F88B501B4076B800069DE2 /* GraphicsInclude.h */,
+				63F88B511B4076B800069DE2 /* JSMethodHandler.cpp */,
+				63F88B521B4076B800069DE2 /* JSMethodHandler.h */,
+				63F88B531B4076B800069DE2 /* LoadListener.cpp */,
+				63F88B541B4076B800069DE2 /* LoadListener.h */,
+				63F88B551B4076B800069DE2 /* UnityGraphicsDevice.cpp */,
+				63F88B561B4076B800069DE2 /* UnityPlugin.h */,
+				63F88B571B4076B800069DE2 /* UnitySurface.cpp */,
+				63F88B581B4076B800069DE2 /* UnitySurface.h */,
+				63F88B591B4076B800069DE2 /* UnitySurfaceFactory.cpp */,
+				63F88B5A1B4076B800069DE2 /* UnitySurfaceFactory.h */,
+				63F88B5B1B4076B800069DE2 /* ViewListener.cpp */,
+				63F88B5C1B4076B800069DE2 /* ViewListener.h */,
+				63F88B5D1B4076B800069DE2 /* WebCore.cpp */,
+				63F88B5E1B4076B800069DE2 /* WebCore.h */,
+				63F88B5F1B4076B800069DE2 /* WebSession.cpp */,
+				63F88B601B4076B800069DE2 /* WebSession.h */,
+				63F88B611B4076B800069DE2 /* WebView.cpp */,
+				63F88B621B4076B800069DE2 /* WebView.h */,
+				63F88B491B40756F00069DE2 /* Supporting Files */,
+			);
+			path = AwesomiumUnity;
+			sourceTree = "<group>";
+		};
+		63F88B491B40756F00069DE2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				63F88B4A1B40756F00069DE2 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		63F88B451B40756F00069DE2 /* AwesomiumUnity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63F88B4D1B40756F00069DE2 /* Build configuration list for PBXNativeTarget "AwesomiumUnity" */;
+			buildPhases = (
+				63F88B421B40756F00069DE2 /* Sources */,
+				63F88B431B40756F00069DE2 /* Frameworks */,
+				63F88B441B40756F00069DE2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AwesomiumUnity;
+			productName = AwesomiumUnity;
+			productReference = 63F88B461B40756F00069DE2 /* AwesomiumUnity.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		63F88B3E1B40756F00069DE2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Bryan Keiren";
+				TargetAttributes = {
+					63F88B451B40756F00069DE2 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = 63F88B411B40756F00069DE2 /* Build configuration list for PBXProject "AwesomiumUnity" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 63F88B3D1B40756F00069DE2;
+			productRefGroup = 63F88B471B40756F00069DE2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63F88B451B40756F00069DE2 /* AwesomiumUnity */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63F88B441B40756F00069DE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		63F88B421B40756F00069DE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F88B671B4076B800069DE2 /* UnitySurfaceFactory.cpp in Sources */,
+				63F88B6A1B4076B800069DE2 /* WebSession.cpp in Sources */,
+				63F88B631B4076B800069DE2 /* JSMethodHandler.cpp in Sources */,
+				63F88B691B4076B800069DE2 /* WebCore.cpp in Sources */,
+				63F88B651B4076B800069DE2 /* UnityGraphicsDevice.cpp in Sources */,
+				63F88B641B4076B800069DE2 /* LoadListener.cpp in Sources */,
+				63F88B681B4076B800069DE2 /* ViewListener.cpp in Sources */,
+				63F88B661B4076B800069DE2 /* UnitySurface.cpp in Sources */,
+				63F88B6B1B4076B800069DE2 /* WebView.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		63F88B4B1B40756F00069DE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		63F88B4C1B40756F00069DE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		63F88B4E1B40756F00069DE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks/,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/bryankeiren/Desktop,
+				);
+				GCC_ENABLE_CPP_RTTI = YES;
+				INFOPLIST_FILE = AwesomiumUnity/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_NAME = AwesomiumUnity;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		63F88B4F1B40756F00069DE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks/,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/bryankeiren/Desktop,
+				);
+				GCC_ENABLE_CPP_RTTI = YES;
+				INFOPLIST_FILE = AwesomiumUnity/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_NAME = AwesomiumUnity;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		63F88B411B40756F00069DE2 /* Build configuration list for PBXProject "AwesomiumUnity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F88B4B1B40756F00069DE2 /* Debug */,
+				63F88B4C1B40756F00069DE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63F88B4D1B40756F00069DE2 /* Build configuration list for PBXNativeTarget "AwesomiumUnity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F88B4E1B40756F00069DE2 /* Debug */,
+				63F88B4F1B40756F00069DE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 63F88B3E1B40756F00069DE2 /* Project object */;
+}

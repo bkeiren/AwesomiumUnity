@@ -215,13 +215,52 @@ pip-log.txt
 .mr.developer.cfg
 
 
-!CppDLL/bin/
+##########################################
+### Xcode ###
+# Created by https://www.gitignore.io
 
-CppDLL/bin/*
-!CppDLL/bin/Debug/
-!CppDLL/bin/Release/
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.xcuserstate
 
-CppDLL/bin/Debug/*
-CppDLL/bin/Release/*
-!CppDLL/bin/Debug/AwesomiumUnity.dll
-!CppDLL/bin/Release/AwesomiumUnity.dll
+
+
+
+##########################################
+# Custom
+
+!CppDLL/Win/bin/
+
+CppDLL/Win/bin/*
+!CppDLL/Win/bin/Debug/
+!CppDLL/Win/bin/Release/
+
+CppDLL/Win/bin/Debug/*
+CppDLL/Win/bin/Release/*
+!CppDLL/Win/bin/Debug/AwesomiumUnity.dll
+!CppDLL/Win/bin/Release/AwesomiumUnity.dll
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/xcuserdata/bryankeiren.xcuserdatad/xcschemes/xcschememanagement.plist
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/xcuserdata/bryankeiren.xcuserdatad/xcschemes/CppDLL.xcscheme
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/xcuserdata/bryankeiren.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/project.xcworkspace/xcuserdata/bryankeiren.xcuserdatad/WorkspaceSettings.xcsettings
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/project.xcworkspace/xcuserdata/bryankeiren.xcuserdatad/UserInterfaceState.xcuserstate
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/project.xcworkspace/xcuserdata/bryankeiren.xcuserdatad/UserInterfaceState.xcuserstate
+
+CppDLL/Mac/AwesomiumUnity/AwesomiumUnity.xcodeproj/project.xcworkspace/xcuserdata/bryankeiren.xcuserdatad/UserInterfaceState.xcuserstate

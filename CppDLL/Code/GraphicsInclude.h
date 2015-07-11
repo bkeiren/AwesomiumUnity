@@ -11,5 +11,6 @@
 		#include <gl/GL.h>
 	#else
 		#include <OpenGL/OpenGL.h>
+        #include <OpenGL/gl.h>
 	#endif
 #endif

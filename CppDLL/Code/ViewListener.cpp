@@ -4,7 +4,9 @@
 namespace AwesomiumUnity
 {
 
+#ifdef _DEBUG
 static int sNextID = 1;
+#endif
 
 ViewListener::ViewListener()
 #ifdef _DEBUG

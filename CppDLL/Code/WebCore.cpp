@@ -179,8 +179,12 @@ extern "C" EXPORT_API void awe_webcore_destroywebview( WebView* _View )
 
 		while (_View->IsLoading())
 		{
-			WebCore::instance()->Update();
+            WebCore::instance()->Update();
+#ifdef UNITY_WIN
 			Sleep(2);
+#else
+            sleep(2);
+#endif
 		}
 
 		_View->Destroy();
