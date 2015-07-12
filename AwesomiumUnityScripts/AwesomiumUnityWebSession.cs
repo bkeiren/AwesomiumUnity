@@ -7,7 +7,11 @@ public class SessionPreferences
     static public string InMemoryWebSessionPath = string.Empty;
 
     public string WebSessionPath = InMemoryWebSessionPath;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
     public string PluginPath = Application.dataPath + "\\awe_plugins\\";
+#elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+    public string PluginPath = Application.dataPath + "/awe_plugins/";
+#endif
     public bool GPUAcceleration = true;
     public bool WebGL = true;
     public bool JavaScript = true;
