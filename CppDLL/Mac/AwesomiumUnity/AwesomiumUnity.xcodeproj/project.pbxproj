@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		636B61D31B51C8200054DA44 /* Awesomium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636B61D21B51C8200054DA44 /* Awesomium.framework */; };
+		63C8FD631B51D99100CDACAF /* Awesomium.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 636B61D21B51C8200054DA44 /* Awesomium.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63DC3AA71B41236B006D01AB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DC3AA61B41236B006D01AB /* OpenGL.framework */; };
 		63F88B631B4076B800069DE2 /* JSMethodHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B511B4076B800069DE2 /* JSMethodHandler.cpp */; };
 		63F88B641B4076B800069DE2 /* LoadListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B531B4076B800069DE2 /* LoadListener.cpp */; };
@@ -19,6 +20,19 @@
 		63F88B6A1B4076B800069DE2 /* WebSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B5F1B4076B800069DE2 /* WebSession.cpp */; };
 		63F88B6B1B4076B800069DE2 /* WebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F88B611B4076B800069DE2 /* WebView.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		63C8FD621B51D97A00CDACAF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				63C8FD631B51D99100CDACAF /* Awesomium.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		636B61D21B51C8200054DA44 /* Awesomium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Awesomium.framework; path = ../../../../../../Library/Frameworks/Awesomium.framework; sourceTree = "<group>"; };
@@ -122,6 +136,7 @@
 				63F88B421B40756F00069DE2 /* Sources */,
 				63F88B431B40756F00069DE2 /* Frameworks */,
 				63F88B441B40756F00069DE2 /* Resources */,
+				63C8FD621B51D97A00CDACAF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -283,6 +298,7 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				INFOPLIST_FILE = AwesomiumUnity/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_NAME = AwesomiumUnity;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -303,6 +319,7 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				INFOPLIST_FILE = AwesomiumUnity/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_NAME = AwesomiumUnity;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";
