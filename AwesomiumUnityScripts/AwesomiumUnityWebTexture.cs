@@ -73,15 +73,15 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 		// Call resize which will create a texture and a webview for us if they do not exist yet at this point.
 		Resize(m_Width, m_Height);
 		
-		if (guiTexture)
+		if (GetComponent<GUITexture>())
 		{
-			guiTexture.texture = m_Texture;
+			GetComponent<GUITexture>().texture = m_Texture;
 		}
-		else if (renderer && renderer.material)
+		else if (GetComponent<Renderer>() && GetComponent<Renderer>().material)
 		{		
-			renderer.material.mainTexture = m_Texture;
-			renderer.material.mainTextureScale = new Vector2(	Mathf.Abs(renderer.material.mainTextureScale.x) * (m_FlipX ? -1.0f : 1.0f),
-			                                                 Mathf.Abs(renderer.material.mainTextureScale.y) * (m_FlipY ? -1.0f : 1.0f));
+			GetComponent<Renderer>().material.mainTexture = m_Texture;
+			GetComponent<Renderer>().material.mainTextureScale = new Vector2(	Mathf.Abs(GetComponent<Renderer>().material.mainTextureScale.x) * (m_FlipX ? -1.0f : 1.0f),
+			                                                 Mathf.Abs(GetComponent<Renderer>().material.mainTextureScale.y) * (m_FlipY ? -1.0f : 1.0f));
 		}
 		else
 		{
@@ -114,9 +114,9 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 		
 		if (m_WebView != null /*&& !m_WebView.IsLoading*/)
 		{
-			if (guiTexture)
+			if (GetComponent<GUITexture>())
 			{
-				Rect guiTextureScreenRect = guiTexture.GetScreenRect();
+				Rect guiTextureScreenRect = GetComponent<GUITexture>().GetScreenRect();
 				int MouseX = (int)Input.mousePosition.x;
 				int MouseY = Screen.height - (int)Input.mousePosition.y;
 				
@@ -125,10 +125,10 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 
 				m_WebView.InjectMouseMove(MouseX, MouseY);
 			}
-			else if (collider)
+			else if (GetComponent<Collider>())
 			{
 				RaycastHit HitInfo;
-				if (this.collider.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out HitInfo, 10000.0f))
+				if (this.GetComponent<Collider>().Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out HitInfo, 10000.0f))
 				{			
 					Vector2 v = HitInfo.textureCoord;
 					v.y = 1.0f - v.y;
