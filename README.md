@@ -82,6 +82,8 @@ Using AwesomiumUnity
 
 ### Getting it to work in the Unity Editor
 
+**Note:** Due to limitations of Awesomium, AwesomiumUnity requires a 32-bit Unity editor. The 32-bit Unity editor can be selected and downloaded through a dropdown list on the Unity download page.
+
 * Do one of the following two options:
 	* 1) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to your Unity project's _Assets\Plugins_ folder.
 	OR
@@ -104,6 +106,8 @@ Using AwesomiumUnity
 * Hit play	
 
 ### Getting it to work for a standalone .exe
+
+**Note:** Due to limitations of Awesomium, AwesomiumUnity requires a 32-bit application (built with a 32-bit editor). The 32-bit Unity editor can be selected and downloaded through a dropdown list on the Unity download page.
 
 * Do one of the following two options:
 	* 1) Copy the pre-built _AwesomiumUnity.dll_ file from either _CppDLL\bin\Debug_ or _CppDLL\bin\Release_ to the same folder as your executable.
