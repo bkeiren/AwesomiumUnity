@@ -19,10 +19,11 @@ public class SessionPreferences
     public bool HTML5LocalStorage = true;
     public bool SmoothScrolling = true;
     public bool WebSecurity = true;
+    public bool HideScrollBars = false;
 
     public override string ToString()
     {
-        return string.Format("Session Path: {0} | Plugin Path: {1} | GPU Accel: {2} | WebGL: {3} | JavaScript: {4} | Plugins: {5} | Web Audio: {6} | Remote Fonts: {7} | App Cache: {8} | Dart: {9} | HTML5 Local Storage: {10} | Smooth Scrolling: {11} | Web Security: {12}", WebSessionPath, PluginPath, GPUAcceleration, WebGL, JavaScript, Plugins, WebAudio, RemoteFonts, AppCache, Dart, HTML5LocalStorage, SmoothScrolling, WebSecurity);
+        return string.Format("Session Path: {0} | Plugin Path: {1} | GPU Accel: {2} | WebGL: {3} | JavaScript: {4} | Plugins: {5} | Web Audio: {6} | Remote Fonts: {7} | App Cache: {8} | Dart: {9} | HTML5 Local Storage: {10} | Smooth Scrolling: {11} | Web Security: {12} | Hide Scrollbars {13}", WebSessionPath, PluginPath, GPUAcceleration, WebGL, JavaScript, Plugins, WebAudio, RemoteFonts, AppCache, Dart, HTML5LocalStorage, SmoothScrolling, WebSecurity, HideScrollBars);
     }
 }
 

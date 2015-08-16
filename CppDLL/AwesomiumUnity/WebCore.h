@@ -3,6 +3,7 @@
 #include "UnityPlugin.h"
 #include <Awesomium/Platform.h>
 #include <Awesomium/JSValue.h>
+#include <Awesomium/WebConfig.h>
 #include <list>
 
 namespace Awesomium
@@ -10,6 +11,10 @@ namespace Awesomium
 	class WebView;
 	class WebSession;
 	class JSObject;
+    //extra
+    struct WebConfig;
+    struct WebPreferences;
+    //end of extra
 }
 
 namespace AwesomiumUnity
@@ -39,8 +44,13 @@ typedef void (*WebView_OnJavaScriptMethodCall)( Awesomium::WebView* caller, cons
 typedef Awesomium::JSValue (*WebView_OnJavaScriptMethodCallWithReturnValue)( Awesomium::WebView* caller, const wchar16* method_name );
 
 
-extern Awesomium::WebSession*	g_WebSession;
-
+extern Awesomium::WebSession*	    g_WebSession;
+//extra
+extern Awesomium::WebConfig         webConfigInstance;
+extern Awesomium::WebPreferences    webPreferenceInstance;
+//const char SCROLLBAR_CSS[44];
+//const std::string SCROLLBAR_CSS;
+//end of extra
 
 #define CALLBACK_NAME_HELPER(name)		g_WebView_##name##Callback
 #define CALLBACK_DEFINE_HELPER(name)	WebView_On##name CALLBACK_NAME_HELPER(name) = nullptr
@@ -78,7 +88,8 @@ extern "C" EXPORT_API void awe_webcore_initialize(const wchar16* _WebSessionPath
 												  bool _Dart,
 												  bool _HTML5LocalStorage,
 												  bool _SmoothScrolling,
-												  bool _WebSecurity);
+												  bool _WebSecurity,
+                                                  bool _HideScrollBar);
 
 extern "C" EXPORT_API void awe_webcore_shutdown();
 
@@ -105,3 +116,7 @@ extern "C" EXPORT_API void awe_webcore_register_webview_callbacks(	AwesomiumUnit
 																	AwesomiumUnity::WebView_OnJavaScriptResultArray			_JavaScriptResultArray,
 																	AwesomiumUnity::WebView_OnJavaScriptMethodCall			_JavaScriptMethodCall,
 																	AwesomiumUnity::WebView_OnJavaScriptMethodCallWithReturnValue _JavaScriptMethodCallWithReturnValue);
+
+// extra
+extern "C" EXPORT_API void awe_webcore_changecssstylesheet(char * _CSSStyleSheet);
+// end of extra

@@ -5,6 +5,8 @@
 #include <Awesomium/STLHelpers.h>
 #include <Awesomium/JSObject.h>
 #include <Awesomium/WebSession.h>
+#include <Awesomium/WebConfig.h>
+#include <Awesomium/WebPreferences.h>
 
 #include <map>
 #include "JSMethodHandler.h"
@@ -28,7 +30,12 @@ namespace
 
 std::list<WebView*>						g_WebViews;
 WebSession*								g_WebSession = nullptr;
-
+// extra
+WebConfig                    webConfigInstance;
+WebPreferences               webPreferenceInstance;
+//const char SCROLLBAR_CSS[44] = "::-webkit-scrollbar { visibility: hidden; }";
+//const std::string SCROLLBAR_CSS = "::-webkit-scrollbar { visibility: hidden; }";
+// end of extra
 
 CALLBACK_DEFINE_HELPER(BeginLoadingFrame);
 CALLBACK_DEFINE_HELPER(FailLoadingFrame);
@@ -73,12 +80,19 @@ extern "C" EXPORT_API void awe_webcore_initialize(const wchar16* _WebSessionPath
 												  bool _Dart,
 												  bool _HTML5LocalStorage,
 												  bool _SmoothScrolling,
-												  bool _WebSecurity)
+												  bool _WebSecurity,
+                                                  bool _HideScrollBar)
 {
 	WebCore* webCore = WebCore::instance();
 	if (webCore == nullptr)
 	{
 		WebConfig config = WebConfig();
+        //extra
+        //AwesomiumUnity::webConfigInstance = config;
+        //config.user_stylesheet = WSLit(_CSSStyleSheet);
+        if (_HideScrollBar)
+            config.user_stylesheet = WSLit("::-webkit-scrollbar { visibility: hidden; }");
+        // end of extra
 		config.log_level = Awesomium::kLogLevel_Verbose;
 		config.log_path = WSLit("awesomium_logs\\");
 		config.plugin_path = WSLit(_PluginPath);
@@ -95,6 +109,9 @@ extern "C" EXPORT_API void awe_webcore_initialize(const wchar16* _WebSessionPath
 		if (AwesomiumUnity::g_WebSession == nullptr)
 		{
 			WebPreferences prefs = WebPreferences();
+        //extra
+            //AwesomiumUnity::webPreferenceInstance = prefs;
+        // end of extra
 			prefs.enable_gpu_acceleration = _GPUAcceleration;
 			prefs.enable_web_gl = _WebGL;
 			prefs.enable_javascript = _JavaScript;
@@ -241,4 +258,9 @@ extern "C" EXPORT_API void awe_webcore_register_webview_callbacks(
 	ASSIGN_HELPER(JavaScriptMethodCallWithReturnValue);
 
 #undef ASSIGN_HELPER
+}
+
+extern "C" EXPORT_API void awe_webcore_changecssstylesheet(char * _CSSStyleSheet){
+    AwesomiumUnity::webConfigInstance.user_stylesheet = WSLit(_CSSStyleSheet);
+    AwesomiumUnity::webPreferenceInstance.user_stylesheet = WSLit(_CSSStyleSheet);
 }
