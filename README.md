@@ -31,11 +31,13 @@ Folders
 ### CppDLL
 
 This folder contains project files for Microsoft Visual Studio and Apple XCode for the C++ DLL that wraps the Awesomium C++ API.
-To compile this solution you need to:
+To compile these projects you need to:
 
 * **Have the Awesomium SDK installed.** 
 * **Windows:** If you install it somewhere other than _C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.5.0_, you will have to change the project's include directory (currently set to _C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.5.0\include_) and the library directory (currently set to _C:\Program Files (x86)\Awesomium Technologies LLC\Awesomium SDK\1.7.5.0\build\lib_).
-* **OS X:** If you install it somewhere other than _/Library/Frameworks/_, you will need to change the include path in XCode for the  *Awesomium.framework* library.
+* **OS X:** Before building the project, run the following command: 
+`sudo install_name_tool -id "@loader_path/../Frameworks/Awesomium.framework/Versions/Current/Awesomium" "/Library/Frameworks/1Awesomium.framework/Versions/Current/Awesomium"`
+If you install it somewhere other than _/Library/Frameworks/_, you will need to change the include path in XCode for the  *Awesomium.framework* library.
 * **Have OpenGL installed** 
 * **Windows:** Needed because the project links with _'opengl32.lib'_.
 * **OS X**: OpenGL should already come installed with OS X by default.
