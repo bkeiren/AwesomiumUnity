@@ -12,6 +12,10 @@
 #include "LoadListener.h"
 #include "ViewListener.h"
 
+#if UNITY_LINUX || UNITY_OSX
+#include <unistd.h>
+#endif
+
 using namespace Awesomium;
 
 namespace AwesomiumUnity
@@ -180,7 +184,11 @@ extern "C" EXPORT_API void awe_webcore_destroywebview( WebView* _View )
 		while (_View->IsLoading())
 		{
 			WebCore::instance()->Update();
+#if UNITY_LINUX || UNITY_OSX
+			usleep(2000);
+#else
 			Sleep(2);
+#endif
 		}
 
 		_View->Destroy();

@@ -67,6 +67,7 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 	public void Initialize()
 	{
 		m_HasBeenInitialized = true;
+		Camera.onPostRender += PluginPostRender;
 
 		AwesomiumUnityWebCore.EnsureInitialized();
 		
@@ -257,6 +258,11 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 			break;	
 		}
 		}
+	}
+
+	void PluginPostRender(Camera camera)
+	{
+		GL.IssuePluginEvent(0);
 	}
 	
 	static private int MapMouseButtons( int _Button )
@@ -464,6 +470,8 @@ public class AwesomiumUnityWebTexture : MonoBehaviour
 			m_WebView.Destroy ();
 			m_WebView = null;
 		}
+		if (m_HasBeenInitialized)
+			Camera.onPostRender -= PluginPostRender;
 	}
 	
 	void OnApplicationQuit()

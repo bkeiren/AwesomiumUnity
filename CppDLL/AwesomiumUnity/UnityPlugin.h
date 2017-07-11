@@ -3,8 +3,12 @@
 // Which platform we are on?
 #if _MSC_VER
 #define UNITY_WIN 1
-#else
+#elif defined(__APPLE__)
 #define UNITY_OSX 1
+#elif defined(__linux__)
+#define UNITY_LINUX 1
+#else
+#error Unknown platform
 #endif
 
 
@@ -23,7 +27,7 @@
 #define SUPPORT_OPENGL 1
 #endif
 
-#if UNITY_OSX
+#if UNITY_OSX || UNITY_LINUX
 #define SUPPORT_OPENGL 1
 #endif
 
@@ -40,6 +44,7 @@ enum GfxDeviceRenderer
 	kGfxRendererOpenGLES20Mobile = 8,    // OpenGL ES 2.0 mobile variant
 	kGfxRendererMolehill = 9,            // Flash 11 Stage3D
 	kGfxRendererOpenGLES20Desktop = 10,  // OpenGL ES 2.0 desktop variant (i.e. NaCl)
+	kGfxRendererOpenGLCore = 17,         // OpenGL core (optional in 5.3-5.4, the only OpenGL renderer in 5.5+)
 };
 
 enum GfxDeviceEventType 

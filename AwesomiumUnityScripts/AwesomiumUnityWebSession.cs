@@ -7,7 +7,7 @@ public class SessionPreferences
     static public string InMemoryWebSessionPath = string.Empty;
 
     public string WebSessionPath = InMemoryWebSessionPath;
-    public string PluginPath = Application.dataPath + "\\awe_plugins\\";
+    public string PluginPath = System.IO.Path.Combine(Application.dataPath, "awe_plugins");
     public bool GPUAcceleration = true;
     public bool WebGL = true;
     public bool JavaScript = true;
