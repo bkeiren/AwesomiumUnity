@@ -1,0 +1,50 @@
+CXX ?= g++
+CODEGEN ?= release
+ARCH ?= $(shell uname -m)
+
+SRCS=AwesomiumUnity/JSMethodHandler.cpp \
+AwesomiumUnity/LoadListener.cpp \
+AwesomiumUnity/UnityGraphicsDevice.cpp \
+AwesomiumUnity/UnitySurface.cpp \
+AwesomiumUnity/UnitySurfaceFactory.cpp \
+AwesomiumUnity/ViewListener.cpp \
+AwesomiumUnity/WebCore.cpp \
+AwesomiumUnity/WebSession.cpp \
+AwesomiumUnity/WebView.cpp
+
+OUTPUTDIR=bin/$(CODEGEN)
+OUTPUT=$(OUTPUTDIR)/libAwesomiumUnity.so
+
+AWESOMIUM_SDK ?= ../../awesomium_v1.7.5_sdk_linux64
+INCLUDES ?= -I$(AWESOMIUM_SDK)/include
+DEFINES ?= -D_GLIBCXX_USE_CXX11_ABI=0
+CXXFLAGS ?= -std=gnu++11 -fPIC
+LIBS ?= -lawesomium-1-7
+LDFLAGS ?= -L$(AWESOMIUM_SDK)/bin
+
+ifeq ($(CODEGEN), debug)
+	CXXFLAGS += -g -O0
+else
+	CXXFLAGS += -g1 -O2
+endif
+
+ifeq ($(ARCH), i686)
+	CXXFLAGS += -m32
+	LDFLAGS += -m32
+endif
+
+OBJECTS=$(SRCS:.cpp=.o)
+
+.cpp.o:
+	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c $< -o $@
+
+$(OUTPUT): $(OBJECTS)
+	# TODO: make this library version agnostic, in case there's another awesomium release
+	ln -sf libawesomium-1-7.so.5.0 $(AWESOMIUM_SDK)/bin/libawesomium-1-7.so
+	mkdir -p $(OUTPUTDIR)
+	$(CXX) $(LDFLAGS) -shared -rdynamic -Wl,-rpath='$$ORIGIN' -o $@ $(OBJECTS) $(LIBS)
+
+all: $(OUTPUT)
+
+clean:
+	rm -f $(OUTPUT) $(OBJECTS)

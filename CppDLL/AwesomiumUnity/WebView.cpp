@@ -103,6 +103,13 @@ extern "C" EXPORT_API void awe_webview_destroy( WebView* _Instance )
 	}
 }
 
+#if SUPPORT_OPENGL
+unsigned char *gWebBuffer = NULL;
+int gWebViewWidth = 0;
+int gWebViewHeight = 0;
+GLuint gWebViewTexture;
+#endif
+
 extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, void* _TextureNativePtr, int _UnityTextureWidth, int _UnityTextureHeight )
 {
 	if (!_Instance || !_TextureNativePtr) return;
@@ -191,24 +198,21 @@ extern "C" EXPORT_API void awe_webview_copybuffertotexture( WebView* _Instance, 
 
 #if SUPPORT_OPENGL
 		// OpenGL case
-		if (g_GraphicsDeviceType == kGfxRendererOpenGL)
+		if (g_GraphicsDeviceType == kGfxRendererOpenGL || g_GraphicsDeviceType == kGfxRendererOpenGLCore)
 		{
-			// update native texture from code
-			if (_TextureNativePtr)
+			// Copy web surface to buffer here, blit buffer to texture in render callback
+			// It needs to be separated this way to work with multithreaded rendering
+			// TODO: Better concurrency protection
+			gWebViewTexture = (GLuint)(size_t)(_TextureNativePtr);
+			if (!gWebBuffer || gWebViewWidth != _UnityTextureWidth || gWebViewHeight != _UnityTextureHeight)
 			{
-				GLuint gltex = (GLuint)(size_t)(_TextureNativePtr);
-				glBindTexture (GL_TEXTURE_2D, gltex);
-				int texWidth, texHeight;
-				glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &texWidth);
-				glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &texHeight);
-
-				unsigned char* data = new unsigned char[texWidth*texHeight*4];
-
-				surface->CopyTo(data, texWidth * 4, 4, true, true);
-
-				glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, texWidth, texHeight, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				delete[] data;
+				if (gWebBuffer)
+					free(gWebBuffer);
+				gWebBuffer = (unsigned char*)malloc(_UnityTextureWidth * _UnityTextureHeight * 4);
+				gWebViewWidth = _UnityTextureWidth;
+				gWebViewHeight = _UnityTextureHeight;
 			}
+			surface->CopyTo(gWebBuffer, _UnityTextureWidth * 4, 4, true, true);
 		}
 #endif
 	}
