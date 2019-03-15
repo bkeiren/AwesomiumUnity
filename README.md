@@ -9,7 +9,7 @@ AwesomiumUnity is a third-party Awesomium wrapper intended for use with Unity3D.
 - Rich, complex **2D or 3D** UI's created using HTML, CSS, and JavaScript.
 - Quick iteration times and result. Just edit your HTML, CSS, or JavaScript and reload!
 - **Fully functional** in the **Unity Editor**\*. Don't restrict yourself to just a standalone game!
-_\* 64-bit editor not be supported due to Awesomium itself being 32-bit only_
+_\* 64-bit editor not supported due to Awesomium itself being 32-bit only_
 
 The wrapper consist of a custom native code C++ DLL which simply wraps Awesomium's C++ API (requires Unity Pro to use) and a set of C# scripts that interface with this DLL.
 
